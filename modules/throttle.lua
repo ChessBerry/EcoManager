@@ -21,12 +21,14 @@ local FAB_RATIO = 0.5
 local current_throttle = 0
 
 local constructionCategories = {
-	{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 0},
-	{name="T2 Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 1},
+	--{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 0},
+	--{name="T2 Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 1},
+	{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, priority = 1},
+	{name="T2 Mass fabrication", category = categories.TECH2 * categories.STRUCTURE * categories.MASSFABRICATION, priority = 2},
 	{name="Paragon", category = categories.STRUCTURE * categories.ENERGYPRODUCTION * categories.EXPERIMENTAL, lasts_for=3, priority = 5},
 	{name="T3 Land Units",  category = categories.LAND * categories.TECH3 * categories.MOBILE, priority = 60},
 	{name="T2 Land Units",  category = categories.LAND * categories.TECH2 * categories.MOBILE, priority = 70},
-	--{name="T1 Land Units",  category = categories.LAND * categories.TECH1 * categories.MOBILE, priority = 80},
+	{name="T1 Land Units",  category = categories.LAND * categories.TECH1 * categories.MOBILE, priority = 88},
 	{name="T3 Air Units",   category = categories.AIR * categories.TECH3 * categories.MOBILE, priority = 10},
 	{name="T2 Air Units",   category = categories.AIR * categories.TECH2 * categories.MOBILE, priority = 70},
 	{name="T1 Air Units",   category = categories.AIR * categories.TECH1 * categories.MOBILE, priority = 80},
@@ -36,18 +38,18 @@ local constructionCategories = {
 	{name="Experimental unit", category = categories.MOBILE * categories.EXPERIMENTAL, off=3, priority = 81},
 	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 90},
 	{name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION, priority = 91},
-	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 99},
-	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 100},
-	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION, priority = 85},
+	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
+	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 97},
+	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION, priority = 85}
 }
 
 local consumptionCategories = {
-	--{name="Shields", category = categories.STRUCTURE * categories.SHIELD, toggle=0, off=3, on=18, priority = 99},
+	--{name="Shields", category = categories.STRUCTURE * categories.SHIELD, toggle=0, off=3, on=18, priority = 100},
 	--{name="Stealth Generator", category = categories.STRUCTURE * categories.OVERLAYCOUNTERINTEL, toggle=5, priority = 99},
 	--{name="OMNI", category = categories.STRUCTURE * categories.OMNI, toggle=3, priority = 98},
-	--{name="Radar Stations", category = categories.STRUCTURE * categories.RADAR, toggle=3, priority = 97},
-	--{name="Optics (eye/perimeter)", category = categories.STRUCTURE * categories.OPTICS, toggle=3, priority = 96},
-	{name="Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 1}
+	--{name="Radar Stations", category = categories.STRUCTURE * categories.RADAR, toggle=3, priority = 96},
+	--{name="Optics (eye/perimeter)", category = categories.STRUCTURE * categories.OPTICS, toggle=3, priority = 95},
+	{name="Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 3}
 }
 
 
@@ -128,14 +130,26 @@ function getResourceUsers(res)
 	local users = {}
 	local unpause = {}
 
+	--LOG("-----------------------------------------------------------------------------------------------------------------------------------")
+	--LOG("getResourceUsers")
+
 	for _, u in all_units do
+		
+		--LOG("all_units")
+		----LOG(repr(u))
+		--LOG(u)
+
 		if not u:IsDead() then
+
+			--LOG("the above is not dead")
 			local focus
 			local cats = {}
 			local econ_data = econData(u)
 
-			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or
-			  (EntityCategoryContains(categories.FACTORY, u) and not (EntityCategoryContains(categories.AIR * categories.TECH3, u))) then
+--			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or
+--			  (EntityCategoryContains(categories.FACTORY, u) and not (EntityCategoryContains(categories.AIR * categories.TECH3, u))) then
+			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or EntityCategoryContains(categories.FACTORY, u) then
+				--LOG("category if is TRUE")
 				focus = u:GetFocus()
 				if focus then
 					cats = constructionCategories
@@ -143,15 +157,20 @@ function getResourceUsers(res)
 					table.insert(unpause, u)
 				end
 			else
+				--LOG("category if is FALSE")
 				cats = consumptionCategories
 				focus = u
 			end
+			
+			--LOG("focus is " .. tostring(focus))
 
 			if focus then
 				local toggle
 				local priority = 1
 
 				for _, c in cats do
+					----LOG("cats")
+					----LOG(repr(c))
 					if EntityCategoryContains(c['category'], focus) then
 						priority = c['priority']
 						if c['toggle'] then
@@ -161,6 +180,8 @@ function getResourceUsers(res)
 						local is_paused = isPaused({unit=u, toggle=toggle})
 						local bp = focus:GetBlueprint()
 						local id = focus:GetEntityId()
+						
+						--LOG("is_paused " .. tostring(is_paused))
 
 						if not is_paused and econ_data['energyConsumed'] then
 							res['net_income'] = math.min(res['income'], res['net_income'] + econ_data['energyConsumed'])
@@ -181,6 +202,8 @@ function getResourceUsers(res)
 							}
 							users[id] = user
 						end
+
+						--LOG("user ID:" .. repr(users[id]))
 
 						local energy_use
 						if is_paused then
@@ -242,7 +265,7 @@ function throttleEconomy()
 		throttle_current = 0
 	}
 
-	--LOG(repr(res))
+	----LOG(repr(res))
 
 	if (res['use'] + current_throttle) >= res['income'] and res['ratio'] >= 0.92 then -- seems like overflow, test with +20% income
 		--LOG("OVERFLOW INC")
@@ -254,6 +277,8 @@ function throttleEconomy()
 	end
 
 	res_users = getResourceUsers(res)
+	
+	----LOG(repr(res_users))
 
 	current_throttle = res['throttle_current']
 
@@ -280,7 +305,7 @@ function throttleEconomy()
 		end
 
 		if throttle_min_storage == 'auto' then
-			if gametime < 180 or u['prio'] == 100 then -- no throttling first 3 minutes of game / pgens
+			if gametime < 480 or u['prio'] == 100 then -- no throttling first 3 minutes of game / prio 100 units. Changed by CheeseBerry to be no throttling for the first 8 minutes
 				min_storage = 0
 			elseif u['prio'] == 1 then -- massfabs are on >60% storage in automode
 				if res['ratio'] >= 0.96 and false then -- overflow from allies
@@ -330,7 +355,7 @@ function throttleEconomy()
 					table.insert(pause_list[toggle_key]['off'], a['unit'])
 				end
 			end
-			--LOG("pausing " .. boolstr(pausing) .. " income " .. res['net_income'] .. " stored " .. res['stored'] .. " energyRequested " .. a['energyRequested'])
+			----LOG("pausing " .. boolstr(pausing) .. " income " .. res['net_income'] .. " stored " .. res['stored'] .. " energyRequested " .. a['energyRequested'])
 			first = false
 		end
 

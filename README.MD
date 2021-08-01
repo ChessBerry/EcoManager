@@ -1,5 +1,16 @@
 EcoManager
 
+__Changes by CheeseBerry__
+Adjusted energy throttle priorities a bit. Notably engies building power generators can now also be throttled, but the mod will do so only as the very last resort.
+Allowed the throttling of t3 air factories. I don't know why that was explicitly commented out before.
+Commander Upgrades, Shields, Radars, Stealth are still never touched.
+
+Fixed bug where the construction of T2 mass fabs was never paused (due to overlapping categories in the constructionCategories table)
+
+Increased the start time for the throttler from 3 min to 8 min. So no throttling will happen during the first 8 minutes of the game.
+
+
+
 __MEX-overlay__
 Shows graphical overlay over mexes to easier spot the different mex levels.
 
