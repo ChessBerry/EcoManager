@@ -75,7 +75,9 @@ function upgradeMexes(mexes, unpause)
 	local upgrades = {}
 
 	for _, m in mexes do
-		if m:IsIdle() then
+		-- Changed by CheeseBerry to only automatically upgrade/pause t1 mexes
+		-- if m:IsIdle() then
+		if m:IsIdle() and EntityCategoryContains(categories.TECH1, m) then
 			local bp = m:GetBlueprint()
 			local upgrades_to = bp.General.UpgradesTo
 
