@@ -11,7 +11,10 @@ Increased the start time for the throttler from 3 min to 8 min. So no throttling
 
 Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the bug where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
 
-The construction of t1 mexes is now never paused
+The construction of t1 mexes is now never paused.
+
+__TODO by CheeseBerry__
+Right now ACU and SACU upgrades can not be paused as u:GetFocus() never returns anything if u is an ACU or a SACU (see throttle.lua). Interestingly, engineeres assisting those upgrades can be paused, as can ACUs or SACUS that assist something else. Only them upgrading themselves can not be paused. This is weird, and pausing would be useful when e.g. making RAS or tele, so I should get around to figure out how to do that. Maybe the function to call needs to be whatever mexes call when they upgrade themselves? Maybe they are not part of the construction but the consumption category (even though mexes are not) and the logic there can't handles ACUs? Not sure
 
 __MEX-overlay__
 Shows graphical overlay over mexes to easier spot the different mex levels.
