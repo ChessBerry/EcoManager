@@ -11,6 +11,8 @@ Increased the start time for the throttler from 3 min to 8 min. So no throttling
 
 Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the bug where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
 
+The construction of t1 mexes is now never paused
+
 __MEX-overlay__
 Shows graphical overlay over mexes to easier spot the different mex levels.
 

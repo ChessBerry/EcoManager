@@ -36,10 +36,11 @@ local constructionCategories = {
 	{name="T2 Naval Units", category = categories.NAVAL * categories.TECH2 * categories.MOBILE, priority = 70},
 	{name="T1 Naval Units", category = categories.NAVAL * categories.TECH1 * categories.MOBILE, priority = 80},
 	{name="Experimental unit", category = categories.MOBILE * categories.EXPERIMENTAL, off=3, priority = 81},
-	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 90},
-	{name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION, priority = 91},
+	-- ACUs and SACUs can't be paused automatically, see getResourceUsers() below, but engies assisting them can.
+	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 97},
+	{name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION * (categories.TECH2 + categories.TECH3), priority = 91},
 	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
-	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 97},
+	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 96},
 	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION, priority = 85}
 }
 
@@ -130,14 +131,12 @@ function getResourceUsers(res)
 	local users = {}
 	local unpause = {}
 
-	--LOG("-----------------------------------------------------------------------------------------------------------------------------------")
-	--LOG("getResourceUsers")
+	-- LOG("-----------------------------------------------------------------------------------------------------------------------------------")
+	-- LOG("getResourceUsers:")
 
 	for _, u in all_units do
 		
-		--LOG("all_units")
-		----LOG(repr(u))
-		--LOG(u)
+		-- LOG(u)
 
 		if not u:IsDead() then
 
@@ -149,15 +148,18 @@ function getResourceUsers(res)
 --			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or
 --			  (EntityCategoryContains(categories.FACTORY, u) and not (EntityCategoryContains(categories.AIR * categories.TECH3, u))) then
 			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or EntityCategoryContains(categories.FACTORY, u) then
-				--LOG("category if is TRUE")
-				focus = u:GetFocus()
+				-- LOG("Is construction category")
+				focus = u:GetFocus() -- This will never return anything for the ACU or SACUS, as such they can't be paused automatically
+				-- LOG("focus:", focus)
 				if focus then
+					-- LOG("and is focus")
 					cats = constructionCategories
 				elseif GetIsPaused({u}) and (u:IsIdle() or u:GetWorkProgress() == 0) then  --idling
+					-- LOG("and is paused")
 					table.insert(unpause, u)
 				end
 			else
-				--LOG("category if is FALSE")
+				-- LOG("Is consumption category")
 				cats = consumptionCategories
 				focus = u
 			end
