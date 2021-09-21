@@ -26,21 +26,21 @@ local constructionCategories = {
 	{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, priority = 1},
 	{name="T2 Mass fabrication", category = categories.TECH2 * categories.STRUCTURE * categories.MASSFABRICATION, priority = 2},
 	{name="Paragon", category = categories.STRUCTURE * categories.ENERGYPRODUCTION * categories.EXPERIMENTAL, lasts_for=3, priority = 5},
-	{name="T3 Land Units",  category = categories.LAND * categories.TECH3 * categories.MOBILE, priority = 60},
-	{name="T2 Land Units",  category = categories.LAND * categories.TECH2 * categories.MOBILE, priority = 70},
-	{name="T1 Land Units",  category = categories.LAND * categories.TECH1 * categories.MOBILE, priority = 88},
+	{name="T3 Land Units",  category = categories.LAND * categories.TECH3 * categories.MOBILE, priority = 93},
+	{name="T2 Land Units",  category = categories.LAND * categories.TECH2 * categories.MOBILE, priority = 94},
+	{name="T1 Land Units",  category = categories.LAND * categories.TECH1 * categories.MOBILE, priority = 96},
 	{name="T3 Air Units",   category = categories.AIR * categories.TECH3 * categories.MOBILE, priority = 10},
 	{name="T2 Air Units",   category = categories.AIR * categories.TECH2 * categories.MOBILE, priority = 70},
 	{name="T1 Air Units",   category = categories.AIR * categories.TECH1 * categories.MOBILE, priority = 80},
-	{name="T3 Naval Units", category = categories.NAVAL * categories.TECH3 * categories.MOBILE, priority = 60},
-	{name="T2 Naval Units", category = categories.NAVAL * categories.TECH2 * categories.MOBILE, priority = 70},
-	{name="T1 Naval Units", category = categories.NAVAL * categories.TECH1 * categories.MOBILE, priority = 80},
+	{name="T3 Naval Units", category = categories.NAVAL * categories.TECH3 * categories.MOBILE, priority = 93},
+	{name="T2 Naval Units", category = categories.NAVAL * categories.TECH2 * categories.MOBILE, priority = 94},
+	{name="T1 Naval Units", category = categories.NAVAL * categories.TECH1 * categories.MOBILE, priority = 95},
 	{name="Experimental unit", category = categories.MOBILE * categories.EXPERIMENTAL, off=3, priority = 81},
 	-- ACUs and SACUs can't be paused automatically, see getResourceUsers() below, but engies assisting them can.
 	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 97},
 	{name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION * (categories.TECH2 + categories.TECH3), priority = 91},
 	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
-	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 96},
+	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 92},
 	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION, priority = 85}
 }
 
