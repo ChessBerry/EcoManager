@@ -19,6 +19,8 @@ Changed it so that land and naval facs are basically never paused. Only ACU upgr
 __TODO by CheeseBerry__
 Right now ACU and SACU upgrades can not be paused as u:GetFocus() never returns anything if u is an ACU or a SACU (see throttle.lua). Interestingly, engineeres assisting those upgrades can be paused, as can ACUs or SACUS that assist something else. Only them upgrading themselves can not be paused. This is weird, and pausing would be useful when e.g. making RAS or tele, so I should get around to figure out how to do that. Maybe the function to call needs to be whatever mexes call when they upgrade themselves? Maybe they are not part of the construction but the consumption category (even though mexes are not) and the logic there can't handles ACUs? Not sure
 
+Once you have a para, all throttling should immediately turn off. An edge case for sure, but a very obvious improvement nonetheless. 
+
 __README_from_the_original_author_below__
 
 __MEX-overlay__
