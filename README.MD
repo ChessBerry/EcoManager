@@ -16,10 +16,17 @@ The construction of t1 mexes is now never paused.
 Adjusted land and naval e-throttling priorities:
 Changed it so that land and naval facs are basically never paused. Only ACU upgrades or stuff not throttled at all has a higher priority. Reason being that a surprisingly throttled production can totally screw you, while barely helping with any power stalls. If you need to pause basically everything to get power back up and running, you'd want to do so manually anyway.
 
-__TODO by CheeseBerry__
-Right now ACU and SACU upgrades can not be paused as u:GetFocus() never returns anything if u is an ACU or a SACU (see throttle.lua). Interestingly, engineeres assisting those upgrades can be paused, as can ACUs or SACUS that assist something else. Only them upgrading themselves can not be paused. This is weird, and pausing would be useful when e.g. making RAS or tele, so I should get around to figure out how to do that. Maybe the function to call needs to be whatever mexes call when they upgrade themselves? Maybe they are not part of the construction but the consumption category (even though mexes are not) and the logic there can't handles ACUs? Not sure
+__Known Bugs and accompanying TODO__
+Right now ACU and SACU upgrades can not be paused as u:GetFocus() never returns anything if u is an ACU or a SACU (see throttle.lua). Interestingly, engineeres assisting those upgrades can be paused, as can ACUs or SACUS that assist something else. Only them upgrading themselves can not be paused. This is weird, and pausing would be useful when e.g. making RAS or tele, so I should get around to figure out how to do that. Maybe the function to call needs to be whatever mexes call when they upgrade themselves? Maybe they are not part of the construction but the consumption category (even though mexes are not) and the logic there can't handles ACUs? Not sure.
 
+When an ally dies and you inherit all his mexes, or when switching back and forth between differen POVs in a replay, sometimes a big black rectangle extending to the top and left screen edges appears over all of your mexes, instead of the usual mex overlay icon. Disabling and re-enabling the mex overlay in the setting fixes this, so the bug must be somewhere there.
+
+__Improvement/Feature Ideas__
 Once you have a para, all throttling should immediately turn off. An edge case for sure, but a very obvious improvement nonetheless. 
+
+A hotkey, not just a setting, that turns off all throttling until you press it again.
+
+A hotkey that removes all selected units and buildings from being throttled until their production is finished/for the next minute/for the rest of the game.
 
 __README_from_the_original_author_below__
 
