@@ -40,7 +40,7 @@ local constructionCategories = {
 	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 97},
 	{name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION * (categories.TECH2 + categories.TECH3), priority = 91},
 	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
-	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 92},
+	-- {name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 92},
 	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION, priority = 85}
 }
 
