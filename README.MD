@@ -3,7 +3,8 @@ EcoManager
 __Changes by CheeseBerry__
 Adjusted energy throttle priorities a bit.
 Allowed the throttling of t3 air factories. I don't know why that was explicitly commented out before.
-Commander Upgrades, Shields, Radars, Stealth, building Pgens are still never touched.
+Also building pgens can be throttled now, but only as a literal last resort.
+Commander Upgrades, Shields, Radars, Stealth, are still never touched.
 
 Fixed bug where the construction of T2 mass fabs was never paused (due to overlapping categories in the constructionCategories table)
 
