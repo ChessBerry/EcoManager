@@ -36,12 +36,12 @@ local constructionCategories = {
 	{name="T2 Naval Units", category = categories.NAVAL * categories.TECH2 * categories.MOBILE, priority = 94},
 	{name="T1 Naval Units", category = categories.NAVAL * categories.TECH1 * categories.MOBILE, priority = 95},
 	{name="Experimental unit", category = categories.MOBILE * categories.EXPERIMENTAL, off=3, priority = 81},
-	-- ACUs and SACUs can't be paused automatically, see getResourceUsers() below, but engies assisting them can.
+	-- TODO: For some reason ACUs and SACUs can't be paused automatically, see getResourceUsers() below, but engies assisting them can.
 	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 97},
 	-- {name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION * (categories.TECH2 + categories.TECH3), priority = 91},
 	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
-	{name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 99},
-	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION, priority = 85}
+	-- {name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 99},
+	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION - categories.ENERGYPRODUCTION, priority = 85}
 }
 
 local consumptionCategories = {
