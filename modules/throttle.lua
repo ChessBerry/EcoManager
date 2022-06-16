@@ -45,12 +45,12 @@ local constructionCategories = {
 }
 
 local consumptionCategories = {
-	--{name="Shields", category = categories.STRUCTURE * categories.SHIELD, toggle=0, off=3, on=18, priority = 100},
-	--{name="Stealth Generator", category = categories.STRUCTURE * categories.OVERLAYCOUNTERINTEL, toggle=5, priority = 99},
-	--{name="OMNI", category = categories.STRUCTURE * categories.OMNI, toggle=3, priority = 98},
-	--{name="Radar Stations", category = categories.STRUCTURE * categories.RADAR, toggle=3, priority = 96},
-	--{name="Optics (eye/perimeter)", category = categories.STRUCTURE * categories.OPTICS, toggle=3, priority = 95},
-	{name="Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 3}
+	-- {name="Shields", category = categories.STRUCTURE * categories.SHIELD, toggle=0, off=3, on=18, priority = 100},
+	-- {name="Stealth Generator", category = categories.STRUCTURE * categories.OVERLAYCOUNTERINTEL, toggle=5, priority = 99},
+	-- {name="OMNI", category = categories.STRUCTURE * categories.OMNI, toggle=3, priority = 98},
+	-- {name="Radar Stations", category = categories.STRUCTURE * categories.RADAR, toggle=3, priority = 96},
+	-- {name="Optics (eye/perimeter)", category = categories.STRUCTURE * categories.OPTICS, toggle=3, priority = 95},
+	-- {name="Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 3}
 }
 
 
