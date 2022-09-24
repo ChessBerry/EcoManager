@@ -145,13 +145,13 @@ function initUI(isReplay)
         OptionsButton.oldHandleEvent(self, event)
     end
 
-    sharedMass = UIUtil.CreateText(AutoshareContainer, 0, 11, UIUtil.bodyFont)
+    sharedMass = UIUtil.CreateText(AutoshareContainer, '0', 11, UIUtil.bodyFont)
     sharedMass:SetColor('ffb7e75f')
     LayoutHelpers.AtLeftTopIn(sharedMass, AutoshareContainer, 1, 0)
-    sharedEnergy = UIUtil.CreateText(AutoshareContainer, 0, 11, UIUtil.bodyFont)
+    sharedEnergy = UIUtil.CreateText(AutoshareContainer, '0', 11, UIUtil.bodyFont)
     sharedEnergy:SetColor('fff7c70f')
     LayoutHelpers.AtLeftTopIn(sharedEnergy, AutoshareContainer, 1, 10)
-    throttledEnergy = UIUtil.CreateText(AutoshareContainer, 0, 11, UIUtil.bodyFont)
+    throttledEnergy = UIUtil.CreateText(AutoshareContainer, '0', 11, UIUtil.bodyFont)
     throttledEnergy:SetColor('red')
     LayoutHelpers.AtLeftTopIn(throttledEnergy, AutoshareContainer, 1, 20)
 
