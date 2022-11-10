@@ -1,5 +1,6 @@
 local modPath = '/mods/EM/'
 local addCommand = import(modPath .. 'modules/commands.lua').addCommand
+local addEventListener = import(modPath .. 'modules/events.lua').addEventListener
 
 function printOptions(args)
 	local options = SessionGetScenarioInfo()
@@ -35,6 +36,40 @@ function printOptions(args)
 	print (str)
 end
 
+local cachedOptions = {}
+local listeners = {}
+function addOptionsListener(data, callback)
+	table.insert(listeners, {callback=callback, data=data})
+
+	for k, v in data do
+		data[k] = cachedOptions[k]
+	end
+end
+
+function getOptions()
+	return cachedOptions
+end
+
+local function onOptionsChanged(options)
+	cachedOptions = options
+
+	for _, listener in listeners do
+		for k, v in listener.data do
+			listener.data[k] = options[k]
+		end
+
+		if listener.callback then 
+			listener.callback(listener.data)
+		end
+	end
+end
+
+
+
 function init()
 	addCommand('options', printOptions)
+	addEventListener('options_changed', onOptionsChanged)
+
+	local options = import('/lua/user/prefs.lua').GetFromCurrentProfile('options')
+	onOptionsChanged(options)
 end

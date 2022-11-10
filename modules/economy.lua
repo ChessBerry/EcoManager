@@ -1,4 +1,4 @@
-local WAIT_TIME  = 0.1
+local WAIT_TIME  = 0.2
 local ECO_DATA_SIZE = 4 --save how many data points
 local eco_tick = 0
 local eco_data = {}

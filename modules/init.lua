@@ -11,24 +11,17 @@ function currentTick()
 	return current_tick
 end
 
-function addListener(callback, wait, option)
-	table.insert(listeners, {callback=callback, wait=wait, option=option})
+function addListener(callback, wait)
+	table.insert(listeners, {callback=callback, wait=wait})
 end
 
 function mainThread()
-	local options
-
 	while true do
 		for _, l in listeners do
 			local current_second = current_tick * WAIT_SECONDS
 
-			if not options or math.mod(current_tick, 10) == 0 then
-				options = import(modPath .. 'modules/utils.lua').getOptions(true)
-				--options = import(modPath .. 'modules/prefs.lua').getPrefs()
-			end
-
-			if math.mod(current_second*10, l['wait']*10) == 0 and (not l.option or options[l.option] ~= 0) then
-				l['callback']()
+			if math.mod(current_second*10, l['wait']*10) == 0 then
+				l.callback()
 			end
 		end
 
@@ -40,8 +33,6 @@ end
 function watchdogThread()
 	while true do
 		if watch_tick == current_tick then -- main thread has died
-			--print "EM: mainThread crashed! Restarting..."
-
 			if mThread then
 				KillThread(mThread)
 			end
@@ -56,13 +47,12 @@ function watchdogThread()
 end
 
 function setup(isReplay, parent)
-	local mods = {'economy', 'factories', 'pause', 'options', 'shields', 'mexes', 'buildoverlay'}
+	local mods = {'options', 'economy', 'pause', 'mexes', 'buildoverlay'}
 
 	if not isReplay then
 		table.insert(mods, 'autoshare');
 		table.insert(mods, 'throttlemass');
 		table.insert(mods, 'throttle');
-		--table.insert(mods, 'throttler');
 	end
 
 	for _, m in mods do

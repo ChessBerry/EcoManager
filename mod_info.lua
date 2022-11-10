@@ -1,8 +1,8 @@
 name = "EcoManager"
-uid = "ecbf6277-24e3-597a-b968-EcoManager-v11"
-version = 11
+uid = "ecbf6277-24e3-597a-b968-EcoManager-v12"
+version = 12
 copyright = "Crotalus"
-description = "EcoManager, helps with micromanaging the economy, 3686 compatible"
+description = "EcoManager, helps with micromanaging the economy. v12: Fix the black box of death bug"
 author = "Crotalus"
 url = ""
 selectable = true
@@ -14,6 +14,7 @@ requires = {
 }
 requiresNames = {}
 conflicts = {
+"ecbf6277-24e3-437a-b968-EcoManager-v11",
 "ecbf6277-24e3-437a-b968-EcoManager-v10",
 "ecbf6277-24e3-437a-b968-EcoManager-v9",
 "ecbf6277-24e3-437a-b968-EcoManager-v8",

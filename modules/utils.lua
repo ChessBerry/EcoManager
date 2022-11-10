@@ -1,3 +1,4 @@
+
 local options
 
 function reloadOptions()
@@ -18,6 +19,11 @@ function saveOptions(options)
 
 	Prefs.SetToCurrentProfile('options', options)
     Prefs.SavePreferences()
+end
+
+function optionsListener(callback)
+	addEventListener('options_changed', callback)
+	callback(options)
 end
 
 function boolstr(bool)
