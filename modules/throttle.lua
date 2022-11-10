@@ -2,16 +2,17 @@ local modPath = '/mods/EM/'
 
 local Units = import('/mods/common/units.lua')
 
+
 local boolstr = import(modPath .. 'modules/utils.lua').boolstr
 local getEconomy = import(modPath ..'modules/economy.lua').getEconomy
 local econData = import(modPath .. 'modules/units.lua').econData
+local addEventListener = import(modPath .. 'modules/events.lua').addEventListener
+local addOptionsListener = import(modPath .. 'modules/options.lua').addOptionsListener
 local addListener = import(modPath .. 'modules/init.lua').addListener
 local addCommand = import(modPath .. 'modules/commands.lua').addCommand
 local round = import(modPath .. 'modules/utils.lua').round
 local Pause = import(modPath .. 'modules/pause.lua').Pause
 local CanUnpauseUnits = import(modPath .. 'modules/pause.lua').CanUnpauseUnits
-
-local throttledEnergyText = import(modPath .. 'modules/autoshare.lua').throttledEnergyText
 
 local overflow_income = 0
 
@@ -19,6 +20,8 @@ local throttle_min_storage = 'auto'
 local FAB_RATIO = 0.5
 
 local current_throttle = 0
+
+local options = {['em_throttle']=1}
 
 local constructionCategories = {
 	--{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 0},
@@ -53,13 +56,6 @@ local consumptionCategories = {
 	-- {name="Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 3}
 }
 
-
-
-function init()
-	addListener(throttleEconomy, 0.6, 'em_throttle')
-	addCommand('t', throttleCommand)
-end
-
 function SetPaused(units, state)
 	Pause(units, state, 'throttle')
 end
@@ -72,7 +68,6 @@ function throttleCommand(args)
 	local str
 	local cmd
 	local Prefs = import('/lua/user/prefs.lua')
-	local options = Prefs.GetFromCurrentProfile('options')
 
 	if table.getsize(args) < 2 then
 		if throttle_min_storage == 'auto' then
@@ -249,7 +244,6 @@ function getResourceUsers(res)
 end
 
 function throttleEconomy()
-	--LOG("THROTTLE")
 	local tps = GetSimTicksPerSecond()
 	local eco = getEconomy()
 	local res
@@ -283,8 +277,6 @@ function throttleEconomy()
 	----LOG(repr(res_users))
 
 	current_throttle = res['throttle_current']
-
-	throttledEnergyText(res['throttle_current'])
 
 	local first = false -- maybe not use this
 	local pausing = false
@@ -409,4 +401,21 @@ function setPause(units, toggle, pause)
 			ToggleScriptBit(units, toggle, bit)
 		end
 	end
+end
+
+function onOptionsChanged(changed) 
+	options = changed
+	if options['em_throttle'] == 2 then -- Enable only massfabs option
+		throttle_min_storage = 0
+	elseif options['em_throttle'] == 1 then
+		throttle_min_storage = 'auto'
+	else
+		throttle_min_storage = 'off'
+	end
+end
+
+function init()
+	addListener(throttleEconomy, 0.6)
+	addOptionsListener(options, onOptionsChanged)
+	addCommand('t', throttleCommand)
 end

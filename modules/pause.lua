@@ -10,10 +10,8 @@ local pause_prios = {
 }
 
 local states = {}
---local current_states = {}
 
 function init()
-	--addListener(DoPause, 0.1)
 end
 
 function Pause(units, pause, module)

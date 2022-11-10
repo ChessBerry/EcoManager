@@ -12,37 +12,6 @@ table.insert(options.ui.items,
         },
     })
 
---[[
-table.insert(options.ui.items,
-    {
-        title = "EM: Show nuke-overlay",
-        key = 'em_nukeoverlay',
-        type = 'toggle',
-        default = 2,
-        custom = {
-            states = {
-                {text = "<LOC _Off>", key = 0 },
-                {text = "Count", key = 1 },
-                {text = "Count+ETA", key = 2 },
-            },
-        },
-    })
-    ]]
-
-table.insert(options.gameplay.items,
-    {
-        title = "EM: Autoshare",
-        key = 'em_autoshare',
-        type = 'toggle',
-        default = 1,
-        custom = {
-            states = {
-                {text = "<LOC _Off>", key = 0 },
-                {text = "<LOC _On>", key = 1 },
-            },
-        },
-    })
-
 table.insert(options.gameplay.items,
     {
         title = "EM: MEX upgrade-pause",
@@ -57,6 +26,7 @@ table.insert(options.gameplay.items,
             },
         },
     })
+    
 table.insert(options.gameplay.items,
     {
         title = "EM: Throttle energy",
@@ -67,6 +37,7 @@ table.insert(options.gameplay.items,
             states = {
                 {text = "<LOC _Off>", key = 0 },
                 {text = "<LOC _On>", key = 1 },
+                {text = "Mass fabs only", key = 2 },
             },
         },
     })

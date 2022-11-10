@@ -1,7 +1,8 @@
 local modPath = '/mods/EM/'
-local Select = import('/lua/ui/game/selection.lua')
+local Select = import('/mods/common/select.lua')
 local Units = import('/mods/common/units.lua')
 
+local addOptionsListener = import(modPath .. 'modules/options.lua').addOptionsListener
 local triggerEvent = import(modPath .. 'modules/events.lua').triggerEvent
 local addListener = import(modPath .. 'modules/init.lua').addListener
 local getEconomy = import(modPath ..'modules/economy.lua').getEconomy
@@ -17,6 +18,11 @@ local CanUnpause = import(modPath .. 'modules/pause.lua').CanUnpause
 
 local pause_queue = {}
 local overlays = {}
+
+local options = {
+	['em_mexes']='auto',
+	['em_mexoverlay']=1
+}
 
 function SetPaused(units, state)
     Pause(units, state, 'mexes')
@@ -48,7 +54,6 @@ function getMexes()
 				for _, category in {categories.TECH1, categories.TECH2} do
 					if EntityCategoryContains(category, mex) then
 						if category == categories.TECH1 or data['bonus'] >= 1.5 then -- upgrade T1 and T2 with MS
-							--table.insert(mexes['idle'][category], mex)
 							table.insert(mexes['idle'], mex)
 						end
 					end
@@ -71,25 +76,24 @@ function upgradeMexes(mexes, unpause)
 		return false
 	end
 
-	--local old = GetSelectedUnits()
 	local upgrades = {}
 
-	for _, m in mexes do
+	for _, mex in mexes do
 		-- Changed by CheeseBerry to only automatically upgrade/pause t1 mexes
 		-- if m:IsIdle() then
-		if m:IsIdle() and EntityCategoryContains(categories.TECH1, m) then
-			local bp = m:GetBlueprint()
+		if mex:IsIdle() and EntityCategoryContains(categories.TECH1, mex) then
+			local bp = mex:GetBlueprint()
 			local upgrades_to = bp.General.UpgradesTo
 
 			if not unpause then
-				table.insert(pause_queue, m)
+				queuePause(mex)
 			end
 
 			if not upgrades[upgrades_to] then
 				upgrades[upgrades_to] = {}
 			end
 
-			table.insert(upgrades[upgrades_to], m)
+			table.insert(upgrades[upgrades_to], mex)
 		end
 	end
 
@@ -133,6 +137,10 @@ function upgradeMexById(id)
 	end
 end
 
+function queuePause(mex)
+	table.insert(pause_queue, mex)
+end
+
 function pauseMexes()
 	local pause = {}
 
@@ -150,9 +158,8 @@ function pauseMexes()
 end
 
 function CreateMexOverlay(unit)
-	--local worldView = import('/lua/ui/game/worldview.lua').viewLeft
+	local worldView = import('/lua/ui/game/worldview.lua').viewLeft
 	local overlay = Bitmap(GetFrame(0))
-    overlay:DisableHitTest()
 	local id = unit:GetEntityId()
 
 	overlay.id = unit:GetEntityId()
@@ -160,7 +167,10 @@ function CreateMexOverlay(unit)
 	overlay:SetSolidColor('black')
 	overlay.Width:Set(10)
 	overlay.Height:Set(10)
-	
+
+	local pos = worldView:Project(unit:GetPosition())
+	LayoutHelpers.AtLeftTopIn(overlay, worldView, pos.x - overlay.Width() / 2, pos.y - overlay.Height() / 2 + 1)
+
 	overlay.OnFrame = function(self, delta)
 		if not unit:IsDead() then
 			local worldView = import('/lua/ui/game/worldview.lua').viewLeft
@@ -173,9 +183,8 @@ function CreateMexOverlay(unit)
 	end
 
 	overlay.text = UIUtil.CreateText(overlay, '0', 10, UIUtil.bodyFont)
-    overlay.text:DisableHitTest()
 	overlay.text:SetColor('green')
-    overlay.text:SetDropShadow(true)
+	overlay.text:SetDropShadow(true)
 	LayoutHelpers.AtCenterIn(overlay.text, overlay, 0, 0)
 	overlay:SetNeedsFrameUpdate(true)
 
@@ -207,9 +216,9 @@ function UpdateMexOverlay(mex)
 	end
 
 	if data['is_idle'] or (mex:GetWorkProgress() < 0.02) then
-		if(tech >= 2 and data['bonus'] < 1.5) then
+		if tech >= 2 and data['bonus'] < 1.5 then
 			color = 'red'
-		elseif(tech == 3) then
+		elseif tech == 3 then
 			color = 'white'
 		else
 			color = 'green'
@@ -223,7 +232,6 @@ function UpdateMexOverlay(mex)
 end
 
 function mexOverlay()
-	options = import(modPath .. 'modules/utils.lua').getOptions(true)
 	mexes = getMexes()
 
 	if options['em_mexoverlay'] == 1 then
@@ -247,8 +255,6 @@ function checkMexes()
 
 	mexes = getMexes()
 
-	options = import(modPath .. 'modules/utils.lua').getOptions(true)
-
 	if table.getsize(mexes['idle']) > 0 then
 		local auto_upgrade = options['em_mexes'] == 'auto';
 
@@ -269,9 +275,10 @@ end
 
 function init(isReplay, parent)
 	if not isReplay then
-		addListener(checkMexes, 1, 'em_mexes')
-		addListener(pauseMexes, 0.2, 'em_mexes')
+		addListener(checkMexes, 1)
+		addListener(pauseMexes, 0.2)
 	end
 
 	addListener(mexOverlay, 1)
+	addOptionsListener(options)
 end
