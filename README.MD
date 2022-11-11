@@ -14,7 +14,8 @@ Changed it so the automagical upgrade and then pause functionality only effects 
 
 The construction of t1 mexes is now never paused.
 
-Mex upgrades are now also never paused for throttle reasons.I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
+Mex upgrades are now also never paused for throttle reasons. I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
+Update: After the integration of crotalus' v12 changes which brings compatability with the November 2022 patch as well as a couple bug fixes features, the mex throttling could not be turned off at all, for some reason. As such, the 'throttlemass' module, governing the throttling/optimizations of mexes, is now not loaded at all. The only thing the mod now does wrt. to mexes is to start an upgrade and then pause it right after, as well as unpausing an assisted mex. It will never throttle them.
 
 Adjusted land and naval e-throttling priorities:
 Changed it so that land and naval facs are basically never paused. Only ACU upgrades or stuff not throttled at all has a higher priority. Reason being that a surprisingly throttled production can totally screw you, while barely helping with any power stalls. If you need to pause basically everything to get power back up and running, you'd want to do so manually anyway.

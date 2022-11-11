@@ -51,7 +51,7 @@ function setup(isReplay, parent)
 
 	if not isReplay then
 		table.insert(mods, 'autoshare');
-		table.insert(mods, 'throttlemass');
+		-- table.insert(mods, 'throttlemass');
 		table.insert(mods, 'throttle');
 	end
 
