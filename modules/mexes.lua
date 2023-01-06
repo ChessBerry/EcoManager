@@ -144,9 +144,14 @@ end
 function pauseMexes()
 	local pause = {}
 
-	for k, m in pause_queue do
-		if not m:IsDead() and m:GetFocus() then
-			table.insert(pause, m)
+	for k, mex in pause_queue do
+		if mex:IsDead() then
+			-- remove mex from queue if it is dead, otherwise it seems there are edge cases where it stays here forever
+			pause_queue[k] = nil
+		elseif mex:GetFocus() then
+			-- if the mex is not dead and fully constructed, we put it into the to-be-paused list and Then remove it 
+			-- from the queue
+			table.insert(pause, mex)
 			pause_queue[k] = nil
 		end
 	end
