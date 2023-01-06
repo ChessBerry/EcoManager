@@ -8,6 +8,8 @@ Commander Upgrades, Shields, Radars, Stealth, are still never touched.
 
 Fixed bug where the construction of T2 mass fabs was never paused (due to overlapping categories in the constructionCategories table)
 
+Fixed a bug where t1 mexes would sometimes upgrade to t2 on their own if the auto-mex-upgrade-and-pause-feature was turned on. I.e. the upgrade would start as planned, but it wouldn't paused, unintentionally upgrading the mex the entire way.
+
 Increased the start time for the throttler from 3 min to 8 min. So no throttling will happen during the first 8 minutes of the game.
 
 Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the bug where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
