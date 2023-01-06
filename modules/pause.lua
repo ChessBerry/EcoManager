@@ -32,21 +32,16 @@ function Pause(units, pause, module)
 	for _, u in units do
 		local id = u:GetEntityId()
 
-		if not states[id] or states[id]['paused'] ~= pause then
-			if not states[id] or states[id]['module'] == module or prio >= states[id]['prio'] then
-				if pause and not states[id]['paused'] then
-					if not states[id] then
-						states[id] = {unit=u,prio=prio,module=module}
-					end
-
-					states[id]['paused'] = pause
-					table.insert(paused, u)
-				elseif(not pause) then
-					table.insert(unpaused, u)
-					states[id] = nil
+		if not states[id] or states[id]['module'] == module or prio >= states[id]['prio'] then
+			if pause then
+				if not states[id] then
+					states[id] = {unit=u,prio=prio,module=module}
 				end
-
-
+				table.insert(paused, u)
+				states[id]['paused'] = pause
+			else
+				table.insert(unpaused, u)
+				states[id] = nil
 			end
 		end
 	end
