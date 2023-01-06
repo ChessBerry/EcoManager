@@ -44,7 +44,7 @@ local constructionCategories = {
 	-- {name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION * (categories.TECH2 + categories.TECH3), priority = 91},
 	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
 	-- {name="Energy Production", category = categories.STRUCTURE * categories.ENERGYPRODUCTION, priority = 99},
-	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION - categories.ENERGYPRODUCTION, priority = 85}
+	{name="Building", category = categories.STRUCTURE - categories.MASSEXTRACTION - categories.ENERGYPRODUCTION - (categories.FACTORY - categories.SUPPORTFACTORY), priority = 85}
 }
 
 local consumptionCategories = {
