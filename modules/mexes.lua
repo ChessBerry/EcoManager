@@ -280,10 +280,10 @@ end
 
 function init(isReplay, parent)
 	if not isReplay then
-		addListener(checkMexes, 1)
-		addListener(pauseMexes, 0.2)
+		addListener(checkMexes, 0.5)
+		addListener(pauseMexes, 0.1)
 	end
 
-	addListener(mexOverlay, 1)
+	addListener(mexOverlay, 0.5)
 	addOptionsListener(options)
 end
