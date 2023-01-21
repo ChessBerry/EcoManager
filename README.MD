@@ -18,6 +18,8 @@ The construction of t1 mexes is now never paused.
 
 The construction of t1 factories and HQ upgrades are now never paused. Only constructing support factories, most notably t3 air facs, is now throttled.
 
+The construction of 'defense' structures (pds, static AA, shields) is now never paused.
+
 Mex upgrades are now also never paused for throttle reasons. I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
 Update: After the integration of crotalus' v12 changes which brings compatability with the November 2022 patch as well as a couple bug fixes features, the mex throttling could not be turned off at all, for some reason. As such, the 'throttlemass' module, governing the throttling/optimizations of mexes, is now not loaded at all. The only thing the mod now does wrt. to mexes is to start an upgrade and then pause it right after, as well as unpausing an assisted mex. It will never throttle them.
 
