@@ -14,6 +14,7 @@ table.insert(options.ui.items,
 
 table.insert(options.gameplay.items,
     {
+        tip = '"On click" - left click the mex. Mex will start upgrading and will not pause.\n"On right click" - select an engineer or commander and right click the mex, it will upgrade-pause. Mexes will unpause automatically when assisted.\n"Auto" - All mexes will upgrade-pause automatically. Mexes will unpause automatically when assisted.',
         title = "EM: MEX upgrade-pause",
         key = 'em_mexes',
         type = 'toggle',
@@ -21,8 +22,9 @@ table.insert(options.gameplay.items,
         custom = {
             states = {
                 {text = "<LOC _Off>", key = 0 },
-                {text = "On click", key = 'click' },
-                {text = "Auto", key = 'auto' },
+                {text = "On click", key = 'click'},
+                {text = "On right click", key = 'r_click'},
+                {text = "Auto", key = 'auto'},
             },
         },
     })

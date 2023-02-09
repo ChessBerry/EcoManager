@@ -65,7 +65,13 @@ function CapStructure(command)
                     or isTech3
                 ) and not buildFabs
 
-            local upgradeMex = options['em_mexes'] == 'click' and not isUpgrading and (isTech1 or isTech2)
+            -- upgrade mex if left-clicked with em_mexes == 'click' or right-clicked with em_mexes == 'r_click'
+            local upgradeMex =
+                (
+                    (options['em_mexes'] == 'click' and command.CommandType != "Guard")
+                    or (options['em_mexes'] == 'r_click' and command.CommandType == "Guard")
+                    and not isUpgrading and (isTech1 or isTech2)
+                )
 
             if upgradeMex then
                 local eco = structure:GetEconData()
