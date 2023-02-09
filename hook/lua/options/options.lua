@@ -22,9 +22,9 @@ table.insert(options.gameplay.items,
         custom = {
             states = {
                 {text = "<LOC _Off>", key = 0 },
-                {text = "On click", key = 'click'},
-                {text = "On right click", key = 'r_click'},
-                {text = "Auto", key = 'auto'},
+                {text = "On click", key = 'click' },
+                {text = "On right click", key = 'r_click' },
+                {text = "Auto", key = 'auto' },
             },
         },
     })
