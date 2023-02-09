@@ -23,8 +23,8 @@ function CapStructure(command)
         return 
     end
 
-    -- check if we have engineers
-    local units = EntityCategoryFilterDown(categories.ENGINEER, command.Units)
+    -- check if we have engineers or commander
+    local units = EntityCategoryFilterDown(categories.ENGINEER, command.Units) or EntityCategoryFilterDown(categories.COMMAND, command.Units)
     if not units[1] then return end
 
     -- check if we have a building that we target
