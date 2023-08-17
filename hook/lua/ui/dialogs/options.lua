@@ -9,9 +9,9 @@
 local UIUtil = import('/lua/ui/uiutil.lua')
 local LayoutHelpers = import('/lua/maui/layouthelpers.lua')
 local Bitmap = import('/lua/maui/bitmap.lua').Bitmap
-local Text = import('/lua/maui/text.lua').Text
+--local Text = import('/lua/maui/text.lua').Text
 local Button = import('/lua/maui/button.lua').Button
-local MenuCommon = import('/lua/ui/menus/menucommon.lua')
+--local MenuCommon = import('/lua/ui/menus/menucommon.lua')
 local Group = import('/lua/maui/group.lua').Group
 local Grid = import('/lua/maui/grid.lua').Grid
 local Slider = import('/lua/maui/slider.lua').Slider
@@ -34,7 +34,8 @@ local optionKeyToControlMap = false
 -- each key's value is the function that actually creates the type
 -- the signature of the function is: fucntion(parent, optionItemData) and should return it's base control
 -- note that each control should create a change function that allows the control to have its value changed
--- not that each control should create a SetCustomData(newCustomData, newDefault) function that will initialize the control with new custom data
+-- not that each control should create a SetCustomData(newCustomData, newDefault) function that will initialize
+-- the control with new custom data
 local controlTypeCreate = {
     toggle = function(parent, optionItemData)
         local combo = Combo(parent, 14, 10, nil, nil, "UI_Tab_Click_01", "UI_Tab_Rollover_01")
@@ -69,7 +70,7 @@ local controlTypeCreate = {
 
         combo.SetCustomData(optionItemData.custom, optionItemData.default)
 
-        combo.OnClick = function(self, index, text, skipUpdate)
+        combo.OnClick = function(self, index, _, skipUpdate)
             self.Key = index
             currentOptionsSet[optionItemData.key] = combo.keyMap[index]
             if optionItemData.update and not skipUpdate then
@@ -77,7 +78,7 @@ local controlTypeCreate = {
             end
         end
 
-        combo.OnDestroy = function(self)
+        combo.OnDestroy = function()
             optionItemData.control = nil
             optionItemData.change = nil
         end
@@ -104,7 +105,7 @@ local controlTypeCreate = {
         local bg = Bitmap(parent, UIUtil.SkinnableFile('/dialogs/options-02/content-btn-line_bmp.dds'))
         bg._button = UIUtil.CreateButtonStd(bg, '/dialogs/standard-small_btn/standard-small', optionItemData.custom.text, 12, 2, 0, "UI_Opt_Mini_Button_Click", "UI_Opt_Mini_Button_Over")
         LayoutHelpers.AtCenterIn(bg._button, bg)
-        bg._button.OnClick = function(self, modifiers)
+        bg._button.OnClick = function(self, _)
             if optionItemData.update then
                 optionItemData.update(self, 0)
             end
@@ -115,12 +116,12 @@ local controlTypeCreate = {
                 optionItemData.update(control, value)
             end
         end
-        bg.OnDestroy = function(self)
+        bg.OnDestroy = function(_)
             optionItemData.control = nil
             optionItemData.change = nil
         end
 
-        bg.SetCustomData = function(newCustomData, newDefault)
+        bg.SetCustomData = function(newCustomData, _)
             bg._button.label:SetText(newCustomData)
         end
 
@@ -144,7 +145,7 @@ local controlTypeCreate = {
         sliderGroup._value = UIUtil.CreateText(sliderGroup, "", 12)
         LayoutHelpers.RightOf(sliderGroup._value, sliderGroup._slider)
 
-        sliderGroup._slider.OnValueChanged = function(self, newValue)
+        sliderGroup._slider.OnValueChanged = function(_, newValue)
             sliderGroup._value:SetText(math.floor(tostring(newValue)))
         end
 
@@ -180,7 +181,7 @@ local controlTypeCreate = {
             end
         end
 
-        sliderGroup.OnDestroy = function(self)
+        sliderGroup.OnDestroy = function(_)
             optionItemData.control = nil
             optionItemData.change = nil
         end
@@ -188,7 +189,7 @@ local controlTypeCreate = {
         -- set initial value
         sliderGroup._slider:SetValue(currentOptionsSet[optionItemData.key])
 
-        sliderGroup.SetCustomData = function(newCustomData, newDefault)
+        sliderGroup.SetCustomData = function(newCustomData, _)
             -- this isn't really correct as it should check the indent, and recreate the control if needed
             -- and set the indent (which isn't exposed in slider, doh!) but this isn't really used
             -- at this point, so it's not worth putting work in to
@@ -217,7 +218,7 @@ local function CreateOption(parent, optionItemData)
     end
 
     -- this is here to help position the control
-    --TODO get this data from layout!
+    -- TODO get this data from layout!
     local controlGroup = Group(bg)
     LayoutHelpers.AtLeftTopIn(controlGroup, bg, 338, 5)
     LayoutHelpers.SetDimensions(controlGroup, 252, 24)
@@ -226,7 +227,7 @@ local function CreateOption(parent, optionItemData)
         bg._control = controlTypeCreate[optionItemData.type](controlGroup, optionItemData)
     else
         LOG("Warning: Option item data [" .. optionItemData.key .. "] contains an unknown control type: " .. optionItemData.type .. ". Valid types are")
-        for k,v in controlTypeCreate do
+        for k, _ in controlTypeCreate do
             LOG(k)
         end
     end
@@ -240,9 +241,9 @@ local function CreateOption(parent, optionItemData)
     return bg
 end
 
-function SaveOptions(currentOptionsSet) 
-    OptionsLogic.SetCurrent(currentOptionsSet)
-    import(modPath .. 'modules/events.lua').triggerEvent('options_changed', currentOptionsSet)
+function SaveOptions(currentOptions)
+    OptionsLogic.SetCurrent(currentOptions)
+    import(modPath .. 'modules/events.lua').triggerEvent('options_changed', currentOptions)
 end
 
 local dialog = false
@@ -272,7 +273,6 @@ function CreateDialog(over, exitBehavior)
         parent = over
     else
         parent = UIUtil.CreateScreenGroup(GetFrame(0), "Options ScreenGroup")
-        local background = MenuCommon.SetupBackground(GetFrame(0))
     end
 
     dialog = Bitmap(parent, UIUtil.UIFile('/scx_menu/options/panel_bmp.dds'))
@@ -346,15 +346,15 @@ function CreateDialog(over, exitBehavior)
 
 
     -- set up button logic
-    okBtn.OnClick = function(self, modifiers)
+    okBtn.OnClick = function(_, _)
         SaveOptions(currentOptionsSet)
         KillDialog()
         if exitBehavior then exitBehavior() end
     end
 
-    dialog.cancelBtn.OnClick = function(self, modifiers)
+    dialog.cancelBtn.OnClick = function(_, _)
         if currentTabButton then
-            for index,option in currentTabButton.tabData.items do
+            for _, option in currentTabButton.tabData.items do
                 if option.cancel then
                     option.cancel()
                 end
@@ -365,11 +365,11 @@ function CreateDialog(over, exitBehavior)
         if exitBehavior then exitBehavior() end
     end
 
-    applyBtn.OnClick = function(self, modifiers)
+    applyBtn.OnClick = function(_, _)
         SaveOptions(currentOptionsSet)
     end
 
-    resetBtn.OnClick = function(self, modifiers)
+    resetBtn.OnClick = function(_, _)
         local function DoReset()
             OptionsLogic.ResetToDefaults()
             -- creating the dialog will reload the old options without saving the new ones and will reset all the controls
@@ -442,7 +442,7 @@ function CreateDialog(over, exitBehavior)
     local options = import('/lua/options/options.lua').options
     local optionsOrder = import('/lua/options/options.lua').optionsOrder
 
-    for index, key in optionsOrder do
+    for _, key in optionsOrder do
         tabData = options[key]
         local curButton = UIUtil.CreateButtonStd(dialog, '/scx_menu/tab_btn/tab', tabData.title, 16, 0, 0, "UI_Tab_Click_01", "UI_Tab_Rollover_01")
         curButton.label:SetDropShadow(true)
@@ -454,7 +454,7 @@ function CreateDialog(over, exitBehavior)
         end
         prev = curButton
 
-        curButton.OnClick = function(self, modifiers)
+        curButton.OnClick = function(self, _)
             SetNewPage(self)
         end
 
