@@ -104,7 +104,6 @@ EcoManager = Class({
 	end,
 
 	addPlugin = function(self, name)
-		--local plugin = _G[name .. 'Plugin'](self.eco)
 		name = name .. 'Plugin'
 		local plugin = import(modPath .. 'modules/throttler/' .. name .. '.lua')[name](self.eco)
 		table.insert(self.plugins, plugin)
@@ -122,8 +121,6 @@ EcoManager = Class({
 			table.insert(all_projects, p)
 		end
 
-		--print ("n_projects " .. table.getsize(all_projects))
-
 		LOG("NEW BALANCE ROUND")
 
 		import(modPath .. 'modules/throttler/Project.lua').throttleIndex = 0
@@ -139,7 +136,6 @@ EcoManager = Class({
 
 	 		plugin:sort()
 
-			--print ("n_plugin_projects " .. table.getsize(plugin.projects))
 	 		for _, p in plugin.projects do
 		 		local ratio_inc
 
@@ -165,39 +161,15 @@ EcoManager = Class({
 	 				if pause then
 	 					p:SetEnergyDrain(0)
 	 				end
-
-
-	 				--[[
-			 		if not pause then
-	 					local last_ratio = p.throttle
-		 				plugin:throttle(eco, p)
-	 					ratio_inc = p.throttle - last_ratio
-		 				if p.throttle < 1 then
-			 				--table.insert(projects, p)
-		 				else
-				 			pause = true -- plugin throttles all from here
-		 				end
-
-		 				eco.energyActual = eco.energyActual + p.energyRequested * (1-ratio_inc)
-		 				eco.massActual = eco.massActual + p.massRequested * (1-ratio_inc)
-		 			end
-
-		 			if(pause) then
-				 		p:SetEnergyDrain(0)
-		 				--projects[p.id] = nil
-		 			end
-		 			]]
 		 		end
 	 		end
 		end
 
 		table.sort(all_projects, function(a, b) return a.index < b.index end)
-		--LOG(repr(all_projects))
 
 		for _, p in all_projects do
 			p:pause(self.pause_list)
 		end
-
 
 		for toggle_key, modes in self.pause_list do
 			local toggle = toggle_key

@@ -12,7 +12,7 @@ MassPlugin = Class(ThrottlerPlugin) {
 		end
 	end,
 
-	throttle = function(self, eco, project)
+	throttle = function(_, eco, project)
 		for _, t in {'mass', 'energy'} do
 			local net = eco:net(t)
 			local new_net = net - project[t .. 'Requested']

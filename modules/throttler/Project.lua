@@ -137,7 +137,6 @@ Project = Class({
 
         for _, a in self.assisters do
             local u = a.unit
-            local is_paused = isPaused(u)
 
             if (currEnergyRequested + a.energyRequested) <= maxEnergyRequested then
                 currEnergyRequested = currEnergyRequested + a.energyRequested
@@ -145,44 +144,6 @@ Project = Class({
         end
 
         self:SetEnergyDrain(currEnergyRequested)
-    --[[
-        --print ("n_assisters " .. table.getsize(self.assisters))
-        local maxEnergyRequested = (1-self.throttle) * self.energyRequested
-        local currEnergyRequested = 0
-        local key = nil
-
-        --LOG("Checking pause for project " .. self.id .. " Max use is " .. maxEnergyRequested)
-
-        for _, a in self.assisters do
-            local u = a.unit
-            local is_paused = isPaused(u)
-
-            if EntityCategoryContains(categories.MASSFABRICATION*categories.STRUCTURE, u) then
-                key = 'toggle_4'
-            else
-                key = 'pause'
-            end
-
-            if not pause_list[key] then pause_list[key] = {pause={}, no_pause={}} end
-
-            --LOG("Assister " .. u:GetEntityId() .. " requesting " .. a.energyRequested .. " maxEnergyRequested " .. maxEnergyRequested .. " is_paused " .. tostring(is_paused))
-            if (currEnergyRequested + a.energyRequested) <= maxEnergyRequested or firstAssister then
-                if is_paused then
-                    table.insert(pause_list[key]['no_pause'], u)
-                end
-
-                currEnergyRequested = currEnergyRequested + a.energyRequested
-                firstAssister = false
-            else
-                if not is_paused then
-                    --LOG("Pausing assister by using key " .. key)
-                    table.insert(pause_list[key]['pause'], u)
-                end
-            end
-        end
-
-        --LOG(repr(pause_list))
-        ]]
     end,
 
     pause = function(self, pause_list)

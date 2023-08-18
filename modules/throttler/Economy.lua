@@ -46,9 +46,6 @@ Economy = Class({
 			if self[prefix .. 'Stored'] < 1 then
 				self[prefix .. 'Actual'] = math.min(self[prefix .. 'Actual'], self[prefix .. 'Income']) -- mex bug
 			end
-
-			--self[prefix .. "Net"] = data['income'][t] - data['lastUseActual'][t] + data['stored'][t] / 5
-
 		end
 	end,
 
