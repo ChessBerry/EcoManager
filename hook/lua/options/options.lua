@@ -40,21 +40,3 @@ table.insert(options.gameplay.items,
             },
         },
     })
-
-table.insert(options.gameplay.items,
-    {
-        title = "EM: MEX Upgrade Optimization",
-        key = 'em_mexOpti',
-        type = 'toggle',
-        default = 0,
-        custom = {
-            states = {
-                {text = "<LOC _Off>", key = 0 },
-                {text = "Auto", key = 'auto' },
-                {text = "Simple", key = 'simple' },
-                {text = "Optimize Time", key = 'optimizeTime' },
-                {text = "Optimize Mass Efficiency", key = 'optimizeMass' },
-                {text = "Optimize Energy Efficiency", key = 'optimizeEnergy' },
-            },
-        },
-    })
