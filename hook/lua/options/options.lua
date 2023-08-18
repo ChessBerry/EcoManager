@@ -26,7 +26,7 @@ table.insert(options.gameplay.items,
             },
         },
     })
-    
+
 table.insert(options.gameplay.items,
     {
         title = "EM: Throttle energy",
