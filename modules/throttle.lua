@@ -14,7 +14,6 @@ local CanUnpauseUnits = import(modPath .. 'modules/pause.lua').CanUnpauseUnits
 local overflow_income = 0
 
 local throttle_min_storage = 'auto'
-local FAB_RATIO = 0.5
 
 local current_throttle = 0
 
@@ -34,7 +33,7 @@ local constructionCategories = {
 	{name="T2 Naval Units", category = categories.NAVAL * categories.TECH2 * categories.MOBILE, priority = 94},
 	{name="T1 Naval Units", category = categories.NAVAL * categories.TECH1 * categories.MOBILE, priority = 95},
 	{name="Experimental unit", category = categories.MOBILE * categories.EXPERIMENTAL, off=3, priority = 81},
-	-- TODO: For some reason ACUs and SACUs can't be paused automatically, see getResourceUsers() below, but engies assisting them can.
+	-- NOTE: For some reason ACUs and SACUs can't be paused automatically, see getResourceUsers() below, but engies assisting them can be.
 	{name="ACU/SCU upgrades", category = categories.LAND * categories.MOBILE * (categories.COMMAND + categories.SUBCOMMANDER), off=2, priority = 97},
 	-- {name="Mass Extractors", category = categories.STRUCTURE * categories.MASSEXTRACTION * (categories.TECH2 + categories.TECH3), priority = 91},
 	{name="Energy Storage", category = categories.STRUCTURE * categories.ENERGYSTORAGE, priority = 89},
@@ -93,10 +92,8 @@ function throttleCommand(args)
 		throttle_min_storage = math.min(math.max(0, tonumber(args[2])/100), 1)
 	end
 
-	if str_cmd == 'off' then
+	if str_cmd == 'off' or throttle_min_storage == 0 then
 		print ("Throttling disabled")
-	elseif throttle_min_storage == 0 then
-		print ("Throttling disabled (except massfabs)")
 	else
 		if throttle_min_storage == 'auto' then
 			print ("Throttling energy using auto mode")
@@ -289,21 +286,13 @@ function throttleEconomy()
 		end
 
 		if throttle_min_storage == 'auto' then
-			if gametime < 480 or u['prio'] == 100 then -- no throttling first 3 minutes of game / prio 100 units. Changed by CheeseBerry to be no throttling for the first 8 minutes
+			if gametime < 480 or u['prio'] == 100 then -- no throttling first 8 minutes of game / prio 100 units
 				min_storage = 0
-			elseif u['prio'] == 1 then -- massfabs are on >60% storage in automode
-				if res['ratio'] >= 0.96 and false then -- overflow from allies
-					min_storage = 0
-				else
-					min_storage = FAB_RATIO
-				end
 			elseif res['income'] > 500 then  -- minimum 10% storage when energy income > 500 (around t2 stage / shields)
 				min_storage = 0.10
 			else
 				min_storage = 0.01 -- 1% storage until energy income is high enough
 			end
-		elseif throttle_min_storage == 0 and u['prio'] == 1 then
-			min_storage = FAB_RATIO
 		end
 
 		if u['prio'] == 0 then -- t3 mass fabs
@@ -319,12 +308,10 @@ function throttleEconomy()
 					new_stored = new_stored - math.abs(new_income*lasts_for)
 				end
 
-				--if((new_income < 0 or u['prio'] == 1) and new_stored < min_storage*res['max'] and not first) then
 				if new_stored < min_storage*res['max'] and not first then
 					pausing = true
 					--LOG("PAUSING!")
 				else
-					--LOG("NEW STORED " .. new_stored .. " NEW INCOME " .. new_income)
 					res['net_income'] = new_income
 					res['stored'] = new_stored
 				end
@@ -395,9 +382,7 @@ end
 
 function onOptionsChanged(changed) 
 	options = changed
-	if options['em_throttle'] == 2 then -- Enable only massfabs option
-		throttle_min_storage = 0
-	elseif options['em_throttle'] == 1 then
+	if options['em_throttle'] == 1 then
 		throttle_min_storage = 'auto'
 	else
 		throttle_min_storage = 'off'

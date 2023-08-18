@@ -37,7 +37,6 @@ table.insert(options.gameplay.items,
             states = {
                 {text = "<LOC _Off>", key = 0 },
                 {text = "<LOC _On>", key = 1 },
-                {text = "Mass fabs only", key = 2 },
             },
         },
     })
