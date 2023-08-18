@@ -30,8 +30,7 @@ end
 
 local Project = import(modPath .. 'modules/throttler/Project.lua').Project
 local Economy = import(modPath .. 'modules/throttler/Economy.lua').Economy
-local EnergyPlugin = import(modPath .. 'modules/throttler/EnergyPlugin.lua').EnergyPlugin
-local StoragePlugin = import(modPath .. 'modules/throttler/StoragePlugin.lua').StoragePlugin
+--local EnergyPlugin = import(modPath .. 'modules/throttler/EnergyPlugin.lua').EnergyPlugin
 
 local Units = import('/mods/common/units.lua')
 local econData = import(modPath .. 'modules/units.lua').econData
