@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 local addCommand = import(modPath .. 'modules/commands.lua').addCommand
 local addEventListener = import(modPath .. 'modules/events.lua').addEventListener
 

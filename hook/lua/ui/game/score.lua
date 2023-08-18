@@ -1,5 +1,5 @@
 do
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 local replayID = -1
 
 

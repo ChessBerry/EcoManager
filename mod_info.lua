@@ -1,5 +1,5 @@
-name = "EcoManager-CBT"
-uid = "ecbf6277-24e3-597a-b968-EcoManager-CBT-v1"
+name = "EcoManagerCBT"
+uid = "ecbf6277-EcoManagerCBT-v1"
 version = 1
 copyright = "Crotalus"
 description = "EcoManager, helps with micromanaging the economy. CheeseBerryTweaks v1"

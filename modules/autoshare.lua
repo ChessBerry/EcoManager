@@ -1,4 +1,4 @@
-local modPath = "/mods/EM/"
+local modPath = '/mods/EcoManagerCBT/'
 local Units = import("/mods/common/units.lua")
 local addListener = import(modPath .. "modules/init.lua").addListener
 local GetScore = import(modPath .. 'modules/score.lua').GetScore

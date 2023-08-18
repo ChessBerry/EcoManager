@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 
 -- The original WAIT_SECONDS = 0.1 possibly was supposed to be analogous to ingame ticks, which actually take 0.1s if 
 -- the game runs at +0, but in practice the ecomanager-mod-ticks count down significantly slower than ingame ticks 
@@ -97,4 +97,3 @@ function init(isReplay, parent)
 	setup(isReplay, parent)
 	ForkThread(initThreads)
 end
-

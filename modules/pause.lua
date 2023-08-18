@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 
 local pause_prios = {
 	mexes={pause=80, unpause=50},

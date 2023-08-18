@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 
 local runCommand = import(modPath .. 'modules/commands.lua').runCommand
 

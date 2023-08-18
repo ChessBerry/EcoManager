@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 local Select = import('/lua/ui/game/selection.lua')
 
 local originalCreateUI = CreateUI

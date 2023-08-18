@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 local getCurrentThrottle = import(modPath .. 'modules/throttle.lua').getCurrentThrottle
 
 local oldCreateUI = CreateUI

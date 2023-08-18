@@ -1,4 +1,4 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 
 local originalUpdateScoreData = UpdateScoreData
 function UpdateScoreData(newData)

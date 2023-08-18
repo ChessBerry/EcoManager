@@ -1,4 +1,4 @@
-modPath = "/mods/EM/"
+modPath = '/mods/EcoManagerCBT/'
 local queuePause = import(modPath .. 'modules/mexes.lua').queuePause
 local Select = import('/lua/ui/game/selection.lua')
 

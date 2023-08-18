@@ -17,7 +17,7 @@ local Combo = import('/lua/ui/controls/combo.lua').Combo
 local IntegerSlider = import('/lua/maui/slider.lua').IntegerSlider
 local OptionsLogic = import('/lua/options/optionslogic.lua')
 local Tooltip = import('/lua/ui/game/tooltip.lua')
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 
 
 -- this will hold the working set of options, which won't be valid until applied

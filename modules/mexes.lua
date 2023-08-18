@@ -1,11 +1,10 @@
-local modPath = '/mods/EM/'
+local modPath = '/mods/EcoManagerCBT/'
 local Select = import('/mods/common/select.lua')
 local Units = import('/mods/common/units.lua')
 
 local addOptionsListener = import(modPath .. 'modules/options.lua').addOptionsListener
 local triggerEvent = import(modPath .. 'modules/events.lua').triggerEvent
 local addListener = import(modPath .. 'modules/init.lua').addListener
-local getEconomy = import(modPath ..'modules/economy.lua').getEconomy
 
 local LayoutHelpers = import('/lua/maui/layouthelpers.lua')
 local Bitmap = import('/lua/maui/bitmap.lua').Bitmap
