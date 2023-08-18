@@ -2,7 +2,7 @@ local modPath = '/mods/EM/'
 local addCommand = import(modPath .. 'modules/commands.lua').addCommand
 local addEventListener = import(modPath .. 'modules/events.lua').addEventListener
 
-function printOptions(args)
+function printOptions(_)
 	local options = SessionGetScenarioInfo()
 	local keys = {'Share', 'ShareUnitCap', 'RankedGame', 'CheatsEnabled'}
 	local str = ''
@@ -41,7 +41,7 @@ local listeners = {}
 function addOptionsListener(data, callback)
 	table.insert(listeners, {callback=callback, data=data})
 
-	for k, v in data do
+	for k, _ in data do
 		data[k] = cachedOptions[k]
 	end
 end
@@ -54,7 +54,7 @@ local function onOptionsChanged(options)
 	cachedOptions = options
 
 	for _, listener in listeners do
-		for k, v in listener.data do
+		for k, _ in listener.data do
 			listener.data[k] = options[k]
 		end
 

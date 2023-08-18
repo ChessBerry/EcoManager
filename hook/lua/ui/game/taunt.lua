@@ -36,7 +36,7 @@ function CheckForAndHandleTaunt(text)
 
         if tauntIndex and taunts[tauntIndex] then
             	ForkThread(function()
-                for i=1, times do
+                for _=1, times do
 	            	SendTaunt(tauntIndex)
             		WaitSeconds(delay / 10)
             	end

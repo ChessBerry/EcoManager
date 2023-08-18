@@ -2,11 +2,8 @@ local modPath = '/mods/EM/'
 
 local Units = import('/mods/common/units.lua')
 
-
-local boolstr = import(modPath .. 'modules/utils.lua').boolstr
 local getEconomy = import(modPath ..'modules/economy.lua').getEconomy
 local econData = import(modPath .. 'modules/units.lua').econData
-local addEventListener = import(modPath .. 'modules/events.lua').addEventListener
 local addOptionsListener = import(modPath .. 'modules/options.lua').addOptionsListener
 local addListener = import(modPath .. 'modules/init.lua').addListener
 local addCommand = import(modPath .. 'modules/commands.lua').addCommand
@@ -24,8 +21,6 @@ local current_throttle = 0
 local options = {['em_throttle']=1}
 
 local constructionCategories = {
-	--{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 0},
-	--{name="T2 Mass fabrication", category = categories.STRUCTURE * categories.MASSFABRICATION, toggle=4, priority = 1},
 	{name="T3 Mass fabrication", category = categories.TECH3 * categories.STRUCTURE * categories.MASSFABRICATION, priority = 1},
 	{name="T2 Mass fabrication", category = categories.TECH2 * categories.STRUCTURE * categories.MASSFABRICATION, priority = 2},
 	{name="Paragon", category = categories.STRUCTURE * categories.ENERGYPRODUCTION * categories.EXPERIMENTAL, lasts_for=3, priority = 5},
@@ -65,8 +60,6 @@ function getCurrentThrottle()
 end
 
 function throttleCommand(args)
-	local str
-	local cmd
 	local Prefs = import('/lua/user/prefs.lua')
 
 	if table.getsize(args) < 2 then
@@ -140,8 +133,6 @@ function getResourceUsers(res)
 			local cats = {}
 			local econ_data = econData(u)
 
---			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or
---			  (EntityCategoryContains(categories.FACTORY, u) and not (EntityCategoryContains(categories.AIR * categories.TECH3, u))) then
 			if EntityCategoryContains(categories.ENGINEER, u) or EntityCategoryContains(categories.MASSEXTRACTION, u) or EntityCategoryContains(categories.FACTORY, u) then
 				-- LOG("Is construction category")
 				focus = u:GetFocus() -- This will never return anything for the ACU or SACUS, as such they can't be paused automatically
@@ -175,7 +166,6 @@ function getResourceUsers(res)
 						end
 
 						local is_paused = isPaused({unit=u, toggle=toggle})
-						local bp = focus:GetBlueprint()
 						local id = focus:GetEntityId()
 						
 						--LOG("is_paused " .. tostring(is_paused))
@@ -185,7 +175,7 @@ function getResourceUsers(res)
 						end
 
 						if not users[id] then
-							local bp = focus:GetBlueprint()
+							local focusBp = focus:GetBlueprint()
 							user = {
 								unit = focus,
 								assisters = {},
@@ -193,9 +183,9 @@ function getResourceUsers(res)
 								toggle = toggle,
 								workProgress = 0,
 								buildRate = 0,
-								buildTime = bp.Economy.BuildTime,
+								buildTime = focusBp.Economy.BuildTime,
 								massRatio = 0,
-								buildCostEnergy = bp.Economy.BuildCostEnergy
+								buildCostEnergy = focusBp.Economy.BuildCostEnergy
 							}
 							users[id] = user
 						end

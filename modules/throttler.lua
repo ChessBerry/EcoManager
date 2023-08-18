@@ -3,8 +3,6 @@ local addListener = import(modPath .. 'modules/init.lua').addListener
 
 local manager
 
-
-
 local EcoManager = import(modPath .. 'modules/throttler/EcoManager.lua').EcoManager
 
 function manageEconomy()

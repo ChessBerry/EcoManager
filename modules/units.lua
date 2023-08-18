@@ -1,8 +1,3 @@
-local modPath = '/mods/EM/'
-
-local boolstr = import(modPath .. 'modules/utils.lua').boolstr
-local addListener = import(modPath .. 'modules/init.lua').addListener
-
 local econ_cache = {}
 
 function econData(unit)

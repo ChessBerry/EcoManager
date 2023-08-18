@@ -61,7 +61,7 @@ function shareResource(player, share)
 		share = {MASS= 0.1, ENERGY=0.1};
 	end
 
-	local retval = SimCallback({
+	local _ = SimCallback({
         Func="GiveResourcesToPlayer",
         Args={ From=army, To=player, Mass=share['MASS'], Energy=share['ENERGY']}
     })
@@ -123,7 +123,7 @@ function checkIfDead()
     end
 end
 
-function init(isReplay, parent)
+function init(_, _)
     local gameMode = SessionGetScenarioInfo().Options.Victory
     if gameMode ~= "demoralization" then
         return

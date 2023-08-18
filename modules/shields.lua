@@ -1,5 +1,4 @@
 local modPath = '/mods/EM/'
-local addListener = import(modPath .. 'modules/init.lua').addListener
 local Units = import('/mods/common/units.lua')
 
 local Select = import('/lua/ui/game/selection.lua')
@@ -8,8 +7,8 @@ function upgradeShields()
 	local upgrades = {}
 	local shields = EntityCategoryFilterDown(categories.SHIELD * categories.STRUCTURE, GetSelectedUnits())
 
-	for i, shield in shields do
-		local upgrades_to = nil
+	for _, shield in shields do
+		local upgrades_to
 
 		if not shield:IsDead() then
 			local bp = shield:GetBlueprint()
@@ -40,7 +39,7 @@ function addShields()
 	end
 end
 
-function init(isReplay, parent)
+function init(_, _)
 	local path = modPath .. 'modules/shields.lua'
 	IN_AddKeyMapTable({['Ctrl-Shift-S'] = {action =  'ui_lua import("' .. path .. '").upgradeShields()'},})
 end

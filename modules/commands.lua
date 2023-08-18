@@ -15,5 +15,5 @@ function runCommand(args)
 	return false
 end
 
-function init(isReplay, parent)
+function init(_, _)
 end

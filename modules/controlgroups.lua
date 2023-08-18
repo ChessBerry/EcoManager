@@ -3,15 +3,15 @@ ControlGroup = Class({
     refill = true,
     add = true,
 
-    __init = function(self)
+    __init = function(_)
     end,
 
-    addUnits = function(self, units)
+    addUnits = function(_, units)
         if not type(units) == 'table' then
             units = {units}
         end
     end,
 
-    onNewUnits = function(self, units)
+    onNewUnits = function(_, _)
     end
 })

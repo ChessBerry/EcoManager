@@ -9,8 +9,6 @@ local getEconomy = import(modPath ..'modules/economy.lua').getEconomy
 
 local LayoutHelpers = import('/lua/maui/layouthelpers.lua')
 local Bitmap = import('/lua/maui/bitmap.lua').Bitmap
-local ItemList = import('/lua/maui/itemlist.lua').ItemList
-local Group = import('/lua/maui/group.lua').Group
 local UIUtil = import('/lua/ui/uiutil.lua')
 
 local Pause = import(modPath .. 'modules/pause.lua').Pause
@@ -165,7 +163,6 @@ end
 function CreateMexOverlay(unit)
 	local worldView = import('/lua/ui/game/worldview.lua').viewLeft
 	local overlay = Bitmap(GetFrame(0))
-	local id = unit:GetEntityId()
 
 	overlay.id = unit:GetEntityId()
 	overlay.destroy = false
@@ -176,11 +173,11 @@ function CreateMexOverlay(unit)
 	local pos = worldView:Project(unit:GetPosition())
 	LayoutHelpers.AtLeftTopIn(overlay, worldView, pos.x - overlay.Width() / 2, pos.y - overlay.Height() / 2 + 1)
 
-	overlay.OnFrame = function(self, delta)
+	overlay.OnFrame = function(_, _)
 		if not unit:IsDead() then
-			local worldView = import('/lua/ui/game/worldview.lua').viewLeft
-			local pos = worldView:Project(unit:GetPosition())
-			LayoutHelpers.AtLeftTopIn(overlay, worldView, pos.x - overlay.Width() / 2, pos.y - overlay.Height() / 2 + 1)
+			local frameWorldView = import('/lua/ui/game/worldview.lua').viewLeft
+			local framePos = frameWorldView:Project(unit:GetPosition())
+			LayoutHelpers.AtLeftTopIn(overlay, frameWorldView, framePos.x - overlay.Width() / 2, framePos.y - overlay.Height() / 2 + 1)
 		else
 			overlay.destroy = true
 			overlay:Hide()
@@ -263,11 +260,6 @@ function checkMexes()
 	if table.getsize(mexes['idle']) > 0 then
 		local auto_upgrade = options['em_mexes'] == 'auto';
 
-		if not auto_upgrade then
-			local eco = getEconomy()
-			local tps = GetSimTicksPerSecond()
-		end
-
 		if auto_upgrade then
 			upgradeMexes(mexes['idle'])
 		end
@@ -278,7 +270,7 @@ function checkMexes()
 	end
 end
 
-function init(isReplay, parent)
+function init(isReplay, _)
 	if not isReplay then
 		addListener(checkMexes, 0.5)
 		addListener(pauseMexes, 0.1)

@@ -8,7 +8,6 @@ local eco = {MASS={}, ENERGY={}}
 function updateEconomy()
 	local mapping = {maxStorage="max", stored="stored", income="income", lastUseRequested="use_requested", lastUseActual="use_actual", ratio="ratio", net_income="net_income"}
 	local data
-	local avg
 
 	tps = GetSimTicksPerSecond()
 	data = GetEconomyTotals()

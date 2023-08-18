@@ -23,7 +23,7 @@ function OnSelectionChanged(oldSelection, newSelection, added, removed)
     originalOnSelectionChanged(oldSelection, newSelection, added, removed)
 end
 
-function CreateUI(isReplay, parent)
+function CreateUI(isReplay, _)
     originalCreateUI(isReplay)
 
     import(modPath .. "modules/init.lua").init(isReplay, import('/lua/ui/game/borders.lua').GetMapGroup())

@@ -1,5 +1,4 @@
 local modPath = '/mods/EM/'
-local addListener = import(modPath .. 'modules/init.lua').addListener
 
 local pause_prios = {
 	mexes={pause=80, unpause=50},
@@ -50,7 +49,7 @@ function Pause(units, pause, module)
 	SetPaused(unpaused, false)
 end
 
-function CanUnpause(unit, module)
+function CanUnpause(_, module)
 	local id
 	local prio = pause_prios[module]['unpause'] or pause_prios[module]['pause']
 

@@ -185,11 +185,11 @@ function SetupPlayerLines()
     	observerLine.speedSlider._background.Depth:Set(function() return observerLine.speedSlider._thumb.Depth() - 1 end)
     	LayoutHelpers.AtVerticalCenterIn(observerLine.speedText, observerLine.speedSlider)
 
-    	observerLine.speedSlider.OnValueChanged = function(self, newValue)
+    	observerLine.speedSlider.OnValueChanged = function(_, newValue)
     		observerLine.speedText:SetText(string.format("%+d", math.floor(tostring(newValue))))
     	end
 
-    	observerLine.speedSlider.OnValueSet = function(self, newValue)
+    	observerLine.speedSlider.OnValueSet = function(_, newValue)
     		ConExecute("WLD_GameSpeed " .. newValue)
     	end
     	observerLine.speedSlider:SetValue(gameSpeed)
@@ -197,7 +197,7 @@ function SetupPlayerLines()
     	index = index + 1
     end
 
-    local function CreateMapNameLine(data, armyIndex)
+    local function CreateMapNameLine(data, _)
     	local group = Group(controls.bgStretch)
 
     	local mapnamesize = string.len(data.mapname)

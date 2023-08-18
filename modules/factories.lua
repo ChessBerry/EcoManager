@@ -42,7 +42,7 @@ function loadFactories()
 	for _, tech in {categories.TECH1, categories.TECH2, categories.TECH3} do
 		for _, type in {categories.LAND, categories.AIR, categories.NAVAL} do
 			factories = EntityCategoryFilterDown(tech * type, all_factories)
-			local orders, toggles, categories = GetUnitCommandData(factories)
+			local _, _, categories = GetUnitCommandData(factories)
 			local bps = EntityCategoryGetUnitList(categories)
 
 			for _, bp in bps do
@@ -61,26 +61,15 @@ function loadFactories()
 			end
 		end
 	end
-
---[[
-	for _, factory in factories do
-		orders, toggles, categories = GetUnitCommandData(factories)
-	end
-	]]
-
 end
 
 function factoryData(factory)
-	local queue = SetCurrentFactoryForQueueDisplay(factory)
-
-	--LOG(repr(queue))
+	SetCurrentFactoryForQueueDisplay(factory)
 end
 
 function orderFactories()
 	local factories = Units.Get(categories.FACTORY)
 	local orders
-	local toggles
-	local categories
 
 	loadFactories()
 
@@ -93,7 +82,7 @@ function orderFactories()
 		if factories then
 			tmp = {}
 			for _, f in factories do
-				local data = factoryData(f)
+				factoryData(f)
 				table.insert(tmp, f)
 			end
 
@@ -103,22 +92,9 @@ function orderFactories()
 			end)
 		end
 	end
-
-
-
-	--[[
-
-	orders, toggles, categories = GetUnitCommandData(factories)
-
-	LOG(repr(orders))
-	LOG(repr(EntityCategoryGetUnitList(categories)))
-
-
-	IssueBlueprintCommand("UNITCOMMAND_BuildFactory", orders[1], 1)
-	]]
 end
 
-function init(isReplay, parent)
+function init(_, _)
 	local path = modPath .. 'modules/factories.lua'
 	IN_AddKeyMapTable({['Ctrl-Y'] = {action =  'ui_lua import("' .. path .. '").resetOrderQueues()'},})
 	IN_AddKeyMapTable({['Ctrl-T'] = {action =  'ui_lua import("' .. path .. '").orderFactories()'},})

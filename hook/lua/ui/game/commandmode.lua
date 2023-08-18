@@ -11,8 +11,8 @@ function UpgradeMex(mex, bp)
 end
 
 --- Allows us to detect a double / triple click
-local pStructure1 = nil
-local pStructure2 = nil
+local pStructure1
+local pStructure2
 function CapStructure(command)
 
     -- retrieve the option in question, can have values: 'off', 'only-storages-extractors' and 'full-suite'

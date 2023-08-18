@@ -6,12 +6,12 @@ local modPath = '/mods/EM/'
 -- our stuff runs on time. Hence me setting WAIT_SECONDS to 0.08 as a rough guess for what might be good here.
 local WAIT_SECONDS = 0.08
 local current_tick = 0  -- weird internal ticks the EM mod uses for some reason, out of sync with ingame ticks 
-local watch_tick = nil
+local watch_tick
 local listeners = {}
 local current_second = 0 -- weird internal seconds the EM mod uses for some reason, out of sync with both ingame and real time 
 local gametime = 0 -- ingame time the faf game overall uses
 
-local mThread = nil
+local mThread
 local wait_seconds_till_mod_does_anything = 120
 
 function currentTick()

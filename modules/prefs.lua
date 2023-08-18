@@ -1,10 +1,10 @@
-local Prefs = import('/lua/user/prefs.lua')--preferences
+local Prefs = import('/lua/user/prefs.lua')  -- preferences
 
 local PREFS_KEY = 'EM_Settings'
 
-local preferences = nil
+local preferences
 
-function getPrefs(key)
+function getPrefs(_)
 	if preferences == nil then
 		preferences = Prefs.GetFromCurrentProfile(PREFS_KEY)
 		if not preferences then

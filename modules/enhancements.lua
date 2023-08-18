@@ -1,5 +1,3 @@
-local enhTable = {}
-
 function canUpgrade(unit, enhancement)
 	local enhancements = unit:GetBlueprint().Enhancements
     local e = enhancements[enhancement]

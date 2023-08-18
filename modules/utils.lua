@@ -1,4 +1,3 @@
-
 local options
 
 function reloadOptions()
@@ -14,10 +13,10 @@ function getOptions(reload)
 	return options
 end
 
-function saveOptions(options)
+function saveOptions(optionsToSave)
 	local Prefs = import('/lua/user/prefs.lua')
 
-	Prefs.SetToCurrentProfile('options', options)
+	Prefs.SetToCurrentProfile('options', optionsToSave)
     Prefs.SavePreferences()
 end
 

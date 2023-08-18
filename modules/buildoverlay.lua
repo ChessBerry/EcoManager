@@ -3,17 +3,12 @@ local modPath = "/mods/EM/"
 local Units = import("/mods/common/units.lua")
 
 local addListener = import(modPath .. "modules/init.lua").addListener
-local econData = import(modPath .. "modules/units.lua").econData
 
 local RegisterChatFunc = import("/lua/ui/game/gamemain.lua").RegisterChatFunc
 local FindClients = import("/lua/ui/game/chat.lua").FindClients
 local LayoutHelpers = import("/lua/maui/layouthelpers.lua")
 local Bitmap = import("/lua/maui/bitmap.lua").Bitmap
-local ItemList = import("/lua/maui/itemlist.lua").ItemList
-local Group = import("/lua/maui/group.lua").Group
 local UIUtil = import("/lua/ui/uiutil.lua")
-
-local channel = "Overlay"
 
 local msgProtocol = {"id", "progress", "eta", "eff", "silo", "x", "y", "z"}
 
@@ -60,7 +55,7 @@ function getConstructions()
 		if not cs[id] then
 			cs[id] = {unit = focus, assisters = {}, progress = 0, current = {}, total = {}}
 
-			for k, v in array do
+			for k, _ in array do
 				cs[id]["current"][k] = 0
 				cs[id]["total"][k] = 0
 			end
@@ -83,17 +78,17 @@ function getConstructions()
 	return cs
 end
 
-function createBuildtimeOverlay(data)
+function createBuildtimeOverlay(overlay_data)
 	worldView = import("/lua/ui/game/worldview.lua").viewLeft
 	local overlay = Bitmap(worldView)
 	overlay:DisableHitTest()
 
-	overlay.id = data.id
+	overlay.id = overlay_data.id
 
 	overlay.Width:Set(28)
 	overlay.Height:Set(32)
 	overlay:SetNeedsFrameUpdate(true)
-	overlay.OnFrame = function(self, delta)
+	overlay.OnFrame = function(_, _)
 		local data = overlays[overlay.id]
 
 		if not data then
@@ -213,7 +208,6 @@ function checkConstructions()
 	for _, c in constructions do
 		local u = c.unit
 		local id = u:GetEntityId()
-		local bp = u:GetBlueprint()
 		local send_msg = false
 		local progress = -1
 		local eta = -1
@@ -312,7 +306,6 @@ function sendOverlayMsg(data)
 end
 
 function processOverlayMsg(player, msg)
-	local armies = GetArmiesTable()
 	local data = {}
 	local me = GetFocusArmy()
 
