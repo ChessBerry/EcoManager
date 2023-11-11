@@ -2,7 +2,46 @@
 
 This mod helps with managing the economy by providing overlays and automatic pause-unpause features.
 
-The mod was originally written by Crotalus. Some changes and bugfixes were made by CheeseBerry.
+The mod was originally written by Crotalus. Some changes and bugfixes were made by CheeseBerry. (See Changelog below.)
+
+## Installation
+
+1. Download zip files.
+2. Unzip them.
+3. Open the mods folder (use "show mods folder" in the faf client).
+4. Create a new folder called "EcoManagerCBT" inside the mods folder. It needs to have this name exactly or the mod doesn't work.
+5. Move the unzipped files into the EcoManagerCBT folder. The file structure should now be "mods > EcoManagerCBT > README.MD".
+6. Activate the mod like any other mod in the faf client.
+7. Adjust your settings in the ingame settings menu.
+
+## Changelog from Ecomanager-v11 to Ecomanager-CBT-v1
+
+### Behavior Changes
+* Added a 2-minute wait time before the mod takes any actions at all. This is to avoid it taking actions that could screw up very optimized or fragile build orders like a hydro rush.
+* Increased the start time for the throttler from 3 min to 8 min. So no throttling will happen during the first 8 minutes of the game.
+* Adjusted energy throttle priorities:
+  * Allowed the throttling of t3 air factories.
+  * Land and naval facs are now only throttled as a last resort, as they use very little energy anyway. 
+* Made it so a significant number of units are never throttled, even if you are stalling. Excluded from throttling are:
+  * ACU/SACU Upgrades
+  * Pgen Construction
+  * T1 Mex Construction
+  * Mex Upgrades (see bug fixes below)
+  * T1 FactoryCommander Upgrades
+  * T1 Fac Construction
+  * HQ Upgrades
+  * PD, AA, Shield Construction
+  * Shield, Radar, Stealth upkeep
+* Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the unintended behavior where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
+
+### Bug and compatability fixes:
+* Fixed overlay turning into a giant black square sometimes. - Fixed by Crotalus in his v12 version that was never pushed to vault it seems.
+* Fixed throttling always being on, regardless of what you select in the options.
+* Removed broken features: Mex-upgrade-optimization, mass-throttle, mass-fab-throttling, settings that didn't do anything.
+* Fixed bug where the construction of T2 mass fabs was never paused (due to overlapping categories in the constructionCategories table)
+* Fixed a bug where t1 mexes would sometimes upgrade to t2 on their own if the auto-mex-upgrade-and-pause-feature was turned on. I.e. the upgrade would start as planned, but it wouldn't be paused, unintentionally upgrading the mex the entire way.
+* Mex upgrades are now never paused by the e-throttler. I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
+* Lots of code cleanup.
 
 ## Features
 
@@ -16,11 +55,7 @@ Colors:
 * White - Fully upgraded T3 mex
 
 ### MEX-Upgrade/pause
-Easier handling of mex upgrades. When an engineer start assisting a paused mex it'll automatically unpause. There are two different upgrade modes:
-
-* Auto: T1 mexes with storages are automatically upgrade / paused.
-
-* On click: Select or assist a mex to upgrade / unpause it.
+Easier handling of mex upgrades. When an engineer start assisting a paused mex it'll automatically unpause.
 
 ### Energy Throttle
 When low of energy, energy users are throttled to prevent energy stall. Different users have different priority, massfabs are lower priority and always throttled if energy goes <80%.
@@ -37,35 +72,6 @@ Commands:
 Sets the threshold when to share mass
 /e <amount>|auto
 Sets the threshold when to share energy
-
-## Changes from Ecomanager-v11 to Ecomanager-CBT-v1
-
-### Changes
-* Added a 2-minute wait time before the mod takes any actions at all to avoid it taking actions that could screw up very optimized or fragile build orders like the standard hydro rush.
-* Increased the start time for the throttler from 3 min to 8 min. So no throttling will happen during the first 8 minutes of the game.
-* Adjusted energy throttle priorities:
-  * Allowed the throttling of t3 air factories.
-  * Land and naval facs are now only throttled as a last resort, as they use very little energy anyway. 
-* Made it so a significant number of units are never throttled, even if you are stalling:
-  * ACU/SACU Upgrades
-  * Pgen Construction
-  * T1 Mex Construction
-  * Mex Upgrades (see bug fixes below)
-  * T1 FactoryCommander Upgrades
-  * T1 Fac Construction
-  * HQ Upgrades
-  * PD, AA, Shield Construction
-  * Shield, Radar, Stealth upkeep
-* Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the unintended behavior where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
-* Lots of code cleanup.
-
-### Bug and compatability fixes:
-* Fixed overlay turning into a giant black square sometimes. - Fixed by Crotalus in his v12 version.
-* Fixed throttling always being on, regardless of what you select in the options.
-* Removed broken features: Mex-upgrade-optimization, mass-throttle, mass-fab-throttling, settings that didn't do anything.
-* Fixed bug where the construction of T2 mass fabs was never paused (due to overlapping categories in the constructionCategories table)
-* Fixed a bug where t1 mexes would sometimes upgrade to t2 on their own if the auto-mex-upgrade-and-pause-feature was turned on. I.e. the upgrade would start as planned, but it wouldn't be paused, unintentionally upgrading the mex the entire way.
-* Mex upgrades are now never paused by the e-throttler reasons. I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
 
 ## Known Bugs
 * ACU and SACU upgrades can not be paused automatically.
