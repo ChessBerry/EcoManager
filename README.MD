@@ -6,13 +6,21 @@ The mod was originally written by Crotalus. Some changes and bugfixes were made 
 
 ## Installation
 
+### Dependency - Common Mod Tools
+
+This mod requires "Common Mod Tools" to be installed.  
+You can find it in the vault of the FAF client. Install and activate it.
+
+### Installation Steps
+
 1. Download zip files.
 2. Unzip them.
 3. Open the mods folder (use "show mods folder" in the faf client).
 4. Create a new folder called "EcoManagerCBT" inside the mods folder. It needs to have this name exactly or the mod doesn't work.
 5. Move the unzipped files into the EcoManagerCBT folder. The file structure should now be "mods > EcoManagerCBT > README.MD".
 6. Activate the mod like any other mod in the faf client.
-7. Adjust your settings in the ingame settings menu.
+7. Make sure that Common Mod Tools is activated as well.
+8. Adjust your settings in the ingame settings menu.
 
 ## Changelog from Ecomanager-v11 to Ecomanager-CBT-v1
 
