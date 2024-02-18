@@ -107,7 +107,9 @@ function createBuildtimeOverlay(overlay_data)
 			end
 
 			pos = worldView:Project(pos)
-			LayoutHelpers.AtLeftTopIn(overlay, worldView, pos.x - overlay.Width() / 2, pos.y - overlay.Height() / 2 + 1)
+			local leftOffset = LayoutHelpers.InvScaleNumber(pos.x - overlay.Width() / 2)
+			local topOffset = LayoutHelpers.InvScaleNumber(pos.y - overlay.Height() / 2 + 1)
+			LayoutHelpers.AtLeftTopIn(overlay, worldView, leftOffset, topOffset)
 		end
 	end
 
