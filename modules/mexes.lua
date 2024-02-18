@@ -170,13 +170,18 @@ function CreateMexOverlay(unit)
 	overlay.Height:Set(10)
 
 	local pos = worldView:Project(unit:GetPosition())
-	LayoutHelpers.AtLeftTopIn(overlay, worldView, pos.x - overlay.Width() / 2, pos.y - overlay.Height() / 2 + 1)
+	local leftOffset = LayoutHelpers.InvScaleNumber(pos.x - overlay.Width() / 2)
+	local topOffset = LayoutHelpers.InvScaleNumber(pos.y - overlay.Height() / 2 + 1)
+	LayoutHelpers.AtLeftTopIn(overlay, worldView, leftOffset, topOffset)
 
 	overlay.OnFrame = function(_, _)
 		if not unit:IsDead() then
 			local frameWorldView = import('/lua/ui/game/worldview.lua').viewLeft
 			local framePos = frameWorldView:Project(unit:GetPosition())
-			LayoutHelpers.AtLeftTopIn(overlay, frameWorldView, framePos.x - overlay.Width() / 2, framePos.y - overlay.Height() / 2 + 1)
+
+			local leftOffset = LayoutHelpers.InvScaleNumber(framePos.x - overlay.Width() / 2)
+			local topOffset = LayoutHelpers.InvScaleNumber(framePos.y - overlay.Height() / 2 + 1)
+			LayoutHelpers.AtLeftTopIn(overlay, worldView, leftOffset, topOffset)
 		else
 			overlay.destroy = true
 			overlay:Hide()
