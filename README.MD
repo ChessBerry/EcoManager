@@ -1,4 +1,4 @@
-# EcoManager-CheeseBerryTweaks v1
+# EcoManager CheeseBerryTweaks
 
 This mod helps with managing the economy by providing overlays and automatic pause-unpause features.
 
@@ -11,7 +11,7 @@ The mod was originally written by Crotalus. Some changes and bugfixes were made 
 This mod requires "Common Mod Tools" to be installed.  
 You can find it in the vault of the FAF client. Install and activate it.
 
-### Installation Steps
+### Manual Installation Steps
 
 1. Download zip files.
 2. Unzip them.
@@ -22,7 +22,7 @@ You can find it in the vault of the FAF client. Install and activate it.
 7. Make sure that Common Mod Tools is activated as well.
 8. Adjust your settings in the ingame settings menu.
 
-## Changelog from Ecomanager-v11 to Ecomanager-CBT-v1
+## Changelog from Ecomanager-v11 to Ecomanager-CBT-v2
 
 ### Behavior Changes
 * Added a 2-minute wait time before the mod takes any actions at all. This is to avoid it taking actions that could screw up very optimized or fragile build orders like a hydro rush.
@@ -49,7 +49,8 @@ You can find it in the vault of the FAF client. Install and activate it.
 * Fixed bug where the construction of T2 mass fabs was never paused (due to overlapping categories in the constructionCategories table)
 * Fixed a bug where t1 mexes would sometimes upgrade to t2 on their own if the auto-mex-upgrade-and-pause-feature was turned on. I.e. the upgrade would start as planned, but it wouldn't be paused, unintentionally upgrading the mex the entire way.
 * Mex upgrades are now never paused by the e-throttler. I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
-* Lots of code cleanup.
+* Fixed misplacement of overlays with >100% ui scale.
+* Removed useless missile overlay for sera cruiser.
 
 ## Features
 

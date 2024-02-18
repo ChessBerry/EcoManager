@@ -1,6 +1,6 @@
 name = "EcoManagerCBT"
-uid = "ecbf6277-24e3-597a-EcoManagerCBT-v1"
-version = 1
+uid = "ecbf6277-24e3-597a-EcoManagerCBT-v2"
+version = 2
 copyright = "Crotalus"
 description = "EcoManager, helps with micromanaging the economy. CheeseBerryTweaks v1"
 author = "Crotalus, CheeseBerry"
@@ -14,6 +14,7 @@ requires = {
 }
 requiresNames = {}
 conflicts = {
+    "ecbf6277-24e3-597a-EcoManagerCBT-v1",
     "ecbf6277-EcoManagerCBT-v1",
     "ecbf6277-24e3-597a-b968-EcoManager-v12",
     "ecbf6277-24e3-437a-b968-EcoManager-v11",
