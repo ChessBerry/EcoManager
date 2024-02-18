@@ -22,7 +22,7 @@ You can find it in the vault of the FAF client. Install and activate it.
 7. Make sure that Common Mod Tools is activated as well.
 8. Adjust your settings in the ingame settings menu.
 
-## Changelog from Ecomanager-v11 to Ecomanager-CBT-v2
+## Changelog from Ecomanager-v11 to Ecomanager-CBT
 
 ### Behavior Changes
 * Added a 2-minute wait time before the mod takes any actions at all. This is to avoid it taking actions that could screw up very optimized or fragile build orders like a hydro rush.

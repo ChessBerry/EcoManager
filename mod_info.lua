@@ -1,6 +1,6 @@
 name = "EcoManagerCBT"
-uid = "8dee7aa0-ce86-11ee-a2f8-0800200c9a66"
-version = 2
+uid = "07f6eb70-ce8c-11ee-a2f8-0800200c9a66"
+version = 3
 copyright = "Crotalus"
 description = "EcoManager, helps with micromanaging the economy. CheeseBerryTweaks"
 author = "Crotalus, CheeseBerry"
