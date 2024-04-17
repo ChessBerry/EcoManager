@@ -340,6 +340,6 @@ function processOverlayMsg(player, msg)
 end
 
 function init()
-	addListener(checkConstructions, 1)
+	addListener(checkConstructions, 0.5)
 	RegisterChatFunc(processOverlayMsg, "Overlay")
 end
