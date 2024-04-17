@@ -25,7 +25,8 @@ You can find it in the vault of the FAF client. Install and activate it.
 ## Changelog from Ecomanager-v11 to Ecomanager-CBT
 
 ### Behavior Changes
-* Added a 2-minute wait time before the mod takes any actions at all. This is to avoid it taking actions that could screw up very optimized or fragile build orders like a hydro rush.
+* Added a 2-minute wait time before the mod takes any actions at all. This is to avoid it taking actions that could screw up very optimized or fragile build orders like a hydro rush.  
+  This includes the mex overlay, so it too will not be active for the first 2 minutes of any game.
 * Increased the start time for the throttler from 3 min to 8 min. So no throttling will happen during the first 8 minutes of the game.
 * Adjusted energy throttle priorities:
   * Allowed the throttling of t3 air factories.
@@ -42,7 +43,7 @@ You can find it in the vault of the FAF client. Install and activate it.
   * Shield, Radar, Stealth upkeep
 * Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the unintended behavior where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
 
-### Bug and compatability fixes:
+### Bug and Compatability Fixes:
 * Fixed overlay turning into a giant black square sometimes. - Fixed by Crotalus in his v12 version that was never pushed to vault it seems.
 * Fixed throttling always being on, regardless of what you select in the options.
 * Removed broken features: Mex-upgrade-optimization, mass-throttle, mass-fab-throttling, settings that didn't do anything.
@@ -51,6 +52,9 @@ You can find it in the vault of the FAF client. Install and activate it.
 * Mex upgrades are now never paused by the e-throttler. I think that was causing the bug where, if you are low on energy, the auto-mex-upgrade-and-pause-feature would start a mex upgrade as usual but the pause would be registered as an energy-throttle pause, not a auto-mex-upgrade-and-pause-feature pause. That would then result in the upgrading t1 mex unintentionally getting unpaused which can obviously be disastrous if it happens at the wrong time.
 * Fixed misplacement of overlays with >100% ui scale.
 * Removed useless missile overlay for sera cruiser.
+
+### Fun Facts
+* Gummy bears get better with age, like wine.
 
 ## Features
 
