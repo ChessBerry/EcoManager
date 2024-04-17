@@ -241,7 +241,7 @@ function checkConstructions()
 			end
 		end
 
-		if EntityCategoryContains(categories.SILO * (categories.ANTIMISSILE * categories.TECH3 + categories.NUKE), u) then
+		if EntityCategoryContains(categories.SILO * (categories.ANTIMISSILE * categories.TECH3 * categories.DEFENSE + categories.NUKE), u) then
 			local info = u:GetMissileInfo()
 			silo = info.nukeSiloStorageCount + info.tacticalSiloStorageCount
 			send_msg = true
