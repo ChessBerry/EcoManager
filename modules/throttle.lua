@@ -390,7 +390,7 @@ function onOptionsChanged(changed)
 end
 
 function init()
-	addListener(throttleEconomy, 0.2)
+	addListener(throttleEconomy, 0.6)
 	addOptionsListener(options, onOptionsChanged)
 	addCommand('t', throttleCommand)
 end
