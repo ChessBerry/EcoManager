@@ -175,7 +175,7 @@ function updateBuildtimeOverlay(data)
 		bitmap.progress:Hide()
 	end
 
-	if data.silo >= 0 then
+	if data.silo >= 1 or data.siloBuildCount >= 1 then
 		bitmap.silo:Show()
 		bitmap.silo.text:SetText(data.silo)
 		if (data.silo > 0) then
@@ -214,6 +214,7 @@ function checkConstructions()
 		local progress = -1
 		local eta = -1
 		local silo = -1
+		local siloBuildCount = -1
 		local eff = -1
 
 		if table.getsize(c.assisters) > 0 then
@@ -244,6 +245,7 @@ function checkConstructions()
 		if EntityCategoryContains(categories.SILO * (categories.ANTIMISSILE * categories.TECH3 * categories.DEFENSE + categories.NUKE), u) then
 			local info = u:GetMissileInfo()
 			silo = info.nukeSiloStorageCount + info.tacticalSiloStorageCount
+			siloBuildCount = info.nukeSiloBuildCount + info.tacticalSiloBuildCount
 			send_msg = true
 		end
 
@@ -262,7 +264,8 @@ function checkConstructions()
 			eta = eta,
 			progress = progress,
 			silo = silo,
-			eff = eff
+			siloBuildCount = siloBuildCount,
+			eff = eff,
 		}
 
 		updateBuildtimeOverlay(data)
