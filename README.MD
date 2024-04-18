@@ -25,6 +25,7 @@ You can find it in the vault of the FAF client. Install and activate it.
 ## Changelog from Ecomanager-v11 to Ecomanager-CBT
 
 ### Behavior Changes
+* Made it so silo overlays are only shown for loaded silos or silos currently constructing a missile. This means sera battleships and t3 nuke subs that don't spawn with a missile in construction, also don't spawn with an overlay.
 * Added a 2-minute wait time before the mod takes any actions at all. This is to avoid it taking actions that could screw up very optimized or fragile build orders like a hydro rush.  
   This includes the mex overlay, so it too will not be active for the first 2 minutes of any game.
 * Increased the start time for the throttler from 3 min to 8 min. So no throttling will happen during the first 8 minutes of the game.
