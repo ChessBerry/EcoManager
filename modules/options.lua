@@ -64,12 +64,14 @@ local function onOptionsChanged(options)
 	end
 end
 
-
+function loadOptionsFromCurrentProfile()
+	local options = import('/lua/user/prefs.lua').GetFromCurrentProfile('options')
+	onOptionsChanged(options)
+end
 
 function init()
 	addCommand('options', printOptions)
 	addEventListener('options_changed', onOptionsChanged)
 
-	local options = import('/lua/user/prefs.lua').GetFromCurrentProfile('options')
-	onOptionsChanged(options)
+	loadOptionsFromCurrentProfile()
 end

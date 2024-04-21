@@ -76,6 +76,8 @@ function watchdogThread()
 end
 
 function setup(isReplay, parent)
+
+	-- Note: I think options must be loaded first, as the other modules use addOptionsListener(), but not sure.
 	local mods = {'options', 'economy', 'pause', 'mexes', 'buildoverlay'}
 
 	if not isReplay then
@@ -86,6 +88,10 @@ function setup(isReplay, parent)
 	for _, m in mods do
 		import(modPath .. 'modules/' .. m .. '.lua').init(isReplay, parent)
 	end
+
+	-- Need to manually reload the options from file after all the modules have been loaded. I think this is a hack, as
+	-- it seemingly wasn't always necessary to do this?
+	import(modPath .. 'modules/options.lua').loadOptionsFromCurrentProfile()
 end
 
 function initThreads()

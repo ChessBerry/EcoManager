@@ -45,6 +45,7 @@ You can find it in the vault of the FAF client. Install and activate it.
 * Changed it so the automagical upgrade and then pause functionality only effects t1 mexes to avoid the unintended behavior where engies tasked with upgrading a t1 mex to t2 sometimes triggered and then assisted the subsequent upgrade to t3, which is devestating when happening on accident.
 
 ### Bug and Compatability Fixes:
+* Fix bug where settings were reset to the default values every time you started a new game.
 * Fixed overlay turning into a giant black square sometimes. - Fixed by Crotalus in his v12 version that was never pushed to vault it seems.
 * Fixed throttling always being on, regardless of what you select in the options.
 * Removed broken features: Mex-upgrade-optimization, mass-throttle, mass-fab-throttling, settings that didn't do anything.
