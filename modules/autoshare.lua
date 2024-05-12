@@ -6,7 +6,7 @@ local GetScore = import(modPath .. 'modules/score.lua').GetScore
 
 local deathShared = false
 local em_shareOnDeath = false
-local options = {['em_shareEverythingOnDeath'] = 0}
+local options = {['em_shareOnDeath'] = 0}
 
 local my_army
 local my_acu
@@ -91,14 +91,9 @@ function giveAllUnits()
 end
 
 function autoshareThread()
-    reprsl("autoshareThread 1")
-    reprsl(em_shareOnDeath)
-
     if em_shareOnDeath then
-        reprsl("autoshareThread 2")
         checkIfDead()
     else
-        reprsl("autoshareThread 3")
     end
 end
 
@@ -126,10 +121,7 @@ function checkIfDead()
         end
     end
 
-    reprsl("checkIfDead 1")
-
     if my_acu:IsDead() and em_shareOnDeath and not deathShared then
-        reprsl("checkIfDead 2")
         deathShared = true
         shareAllResources()
         WaitSeconds(0.2)
@@ -139,17 +131,16 @@ end
 
 function onOptionsChanged(changed)
     options = changed
-    reprsl("onOptionsChanged 1")
     if options['em_shareOnDeath'] == 1 then
-        reprsl("onOptionsChanged 2")
         em_shareOnDeath = true
     else
-        reprsl("onOptionsChanged 3")
         em_shareOnDeath = false
     end
 end
 
 function init(_, _)
+    -- for some reason this autoshare module was disabled for all game modes except demoralization
+    -- now it's enabled for all game modes, but adjustable, defaulting to off
     --local gameMode = SessionGetScenarioInfo().Options.Victory
     --if gameMode ~= "demoralization" then
     --    return
