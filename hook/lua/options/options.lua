@@ -40,3 +40,17 @@ table.insert(options.gameplay.items,
             },
         },
     })
+
+table.insert(options.gameplay.items,
+    {
+        title = "EM: Share Base and Resources on Death",
+        key = 'em_shareOnDeath',
+        type = 'toggle',
+        default = 0,
+        custom = {
+            states = {
+                {text = "<LOC _Off>", key = 0 },
+                {text = "<LOC _On>", key = 1 },
+            },
+        },
+    })

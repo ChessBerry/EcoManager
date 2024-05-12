@@ -1,9 +1,12 @@
 local modPath = '/mods/EcoManagerCBT/'
 local Units = import("/mods/common/units.lua")
 local addListener = import(modPath .. "modules/init.lua").addListener
+local addOptionsListener = import(modPath .. 'modules/options.lua').addOptionsListener
 local GetScore = import(modPath .. 'modules/score.lua').GetScore
 
 local deathShared = false
+local em_shareOnDeath = false
+local options = {['em_shareEverythingOnDeath'] = 0}
 
 local my_army
 local my_acu
@@ -88,7 +91,15 @@ function giveAllUnits()
 end
 
 function autoshareThread()
-    checkIfDead()
+    reprsl("autoshareThread 1")
+    reprsl(em_shareOnDeath)
+
+    if em_shareOnDeath then
+        reprsl("autoshareThread 2")
+        checkIfDead()
+    else
+        reprsl("autoshareThread 3")
+    end
 end
 
 function getAcu()
@@ -115,7 +126,10 @@ function checkIfDead()
         end
     end
 
-    if my_acu:IsDead() and not deathShared then
+    reprsl("checkIfDead 1")
+
+    if my_acu:IsDead() and em_shareOnDeath and not deathShared then
+        reprsl("checkIfDead 2")
         deathShared = true
         shareAllResources()
         WaitSeconds(0.2)
@@ -123,11 +137,24 @@ function checkIfDead()
     end
 end
 
-function init(_, _)
-    local gameMode = SessionGetScenarioInfo().Options.Victory
-    if gameMode ~= "demoralization" then
-        return
+function onOptionsChanged(changed)
+    options = changed
+    reprsl("onOptionsChanged 1")
+    if options['em_shareOnDeath'] == 1 then
+        reprsl("onOptionsChanged 2")
+        em_shareOnDeath = true
+    else
+        reprsl("onOptionsChanged 3")
+        em_shareOnDeath = false
     end
+end
+
+function init(_, _)
+    --local gameMode = SessionGetScenarioInfo().Options.Victory
+    --if gameMode ~= "demoralization" then
+    --    return
+    --end
 
     addListener(autoshareThread, 0.5)
+    addOptionsListener(options, onOptionsChanged)
 end
